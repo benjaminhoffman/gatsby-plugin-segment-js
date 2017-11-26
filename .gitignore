@@ -1,0 +1,7 @@
+node_modules/*
+
+/gatsby-browser.js
+/gatsby-ssr.js
+yarn.lock
+
+*.DS_Store
