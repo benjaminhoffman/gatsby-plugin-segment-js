@@ -1,17 +1,19 @@
 {
-  "name": "gatsby-plugin-segment",
+  "name": "gatsby-plugin-segment-js",
   "description": "Easily add Segment JS snippet to your website",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment.git",
-  "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
+  "author":
+    "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
   "license": "MIT",
   "keywords": [
-    "gatsby",
-    "gatsby-plugin",
+    "segment analytics",
     "segment",
+    "segment javascript",
     "analytics.js",
-    "segment analytics"
+    "gatsby",
+    "gatsby-plugin"
   ],
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -24,8 +26,8 @@
   },
   "homepage": "https://github.com/konsumer/gatsby-remark-graph#readme",
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
   }
 }

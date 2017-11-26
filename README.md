@@ -1,16 +1,15 @@
-# gatsby-plugin-segment
-A feature-rich, lightweight Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/sources/website/analytics.js/quickstart/) to your site.
+# gatsby-plugin-segment-js
+A lightweight & feature-rich Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/sources/website/analytics.js/quickstart/) to your site.
 
 ## Features
 Packed with features:
 - use multiple write keys (one for prod env, another optional one for dev)
-- disable page view tracking just in case you want to add that manually
-- super lightweight
+- disable page view tracking (just in case you want to add it later manually)
 - up to date (Segment snippet 4.0.0)
 
 ## Install 
-- `$ yarn add gatsby-plugin-segment`
-- or `$ npm install --save gatsby-plugin-segment`
+- `$ yarn add gatsby-plugin-segment-js`
+- or `$ npm install --save gatsby-plugin-segment-js`
 
 ## How to use
 
@@ -18,7 +17,7 @@ In your gatsby-config.js file:
 ```javascript
 plugins: [
     {
-        resolve: `gatsby-plugin-segment`,
+        resolve: `gatsby-plugin-segment-js`,
         options: {
             // your segment write key for your production environment
             // when process.env.NODE_ENV === 'production'
