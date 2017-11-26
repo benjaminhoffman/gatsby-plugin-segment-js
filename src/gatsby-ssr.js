@@ -1,13 +1,13 @@
 import React from "react";
 
 exports.onRenderBody = ({ setHeadComponents, pluginOptions }) => {
-  const { trackPage, prod_key, dev_key } = pluginOptions;
+  const { trackPage, prodKey, devKey } = pluginOptions;
 
   // ensures Segment write key is present
-  assert(prod_key.length, "segment prod_key option cannot be blank");
+  assert(prodKey.length, "segment prodKey option cannot be blank");
 
   // determines whether to use production or development write key
-  const writeKey = process.env.NODE_ENV === "production" ? prod_key : dev_key;
+  const writeKey = process.env.NODE_ENV === "production" ? prodKey : devKey;
 
   // determines whether we should include Segment's page call
   const includeTrackPage = trackPage ? "analytics.page();" : null;

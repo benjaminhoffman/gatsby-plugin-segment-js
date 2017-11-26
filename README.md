@@ -16,12 +16,12 @@ plugins: [
             // your segment write key for your production environment
             // when process.env.NODE_ENV === 'production'
             // required; non-empty string
-            prod_key: `SEGMENT_PRODUCTION_WRITE_KEY`,
+            prodKey: `SEGMENT_PRODUCTION_WRITE_KEY`,
 
             // if you have a development env for your segment account, paste that key here
             // when process.env.NODE_ENV === 'development'
             // optional; non-empty string
-            dev_key: `SEGMENT_DEV_WRITE_KEY`,
+            devKey: `SEGMENT_DEV_WRITE_KEY`,
 
             // whether you want to include analytics.page()
             // optional; boolean that defaults to true
