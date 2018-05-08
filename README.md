@@ -37,3 +37,5 @@ plugins: [
     }
 ]
 ```
+
+If you want to track events, you simply invoke Segment as normal -- `analytics.track(<whatever>)` -- and you should see the events within your Segment debugger!  If you want to track pageviews, it should work automatically if `trackPage` is `true`.
