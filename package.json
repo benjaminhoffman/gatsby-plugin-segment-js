@@ -19,9 +19,9 @@
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
   "bugs": {
-    "url": "https://github.com/benjaminhoffman/gatsby-plugin-segment/issues"
+    "url": "https://github.com/benjaminhoffman/gatsby-plugin-segment-js/issues"
   },
-  "homepage": "https://github.com/benjaminhoffman/gatsby-plugin-segment#readme",
+  "homepage": "https://github.com/benjaminhoffman/gatsby-plugin-segment-js#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.6.1",
