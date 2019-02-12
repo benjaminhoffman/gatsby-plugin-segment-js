@@ -8,7 +8,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     console.error("segment prodKey must be at least 10 char in length");
 
   // if dev key is present, ensures it is at least 10 car in length
-  if (!!devKey && devKey.length < 10)
+  if (devKey && devKey.length < 10)
     console.error("if present, devKey must be at least 10 char in length");
 
   // use prod write key when in prod env, else use dev write key
@@ -25,7 +25,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   `;
 
   // only render snippet if write key exists
-  if (!!writeKey) {
+  if (writeKey) {
     setHeadComponents([
       <script
         key="plugin-segment"
