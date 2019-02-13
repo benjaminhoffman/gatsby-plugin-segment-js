@@ -1,19 +1,24 @@
 # gatsby-plugin-segment-js
+
 A lightweight & feature-rich Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/sources/website/analytics.js/quickstart/) to your site.
 
 ## Features
-Packed with features:
-- use multiple write keys (one for prod env, another optional one for dev)
-- disable page view tracking (just in case you want to add it later manually)
-- up to date (Segment snippet 4.0.0)
 
-## Install 
-- `$ yarn add gatsby-plugin-segment-js`
-- or `$ npm install --save gatsby-plugin-segment-js`
+Packed with features:
+
+-   use multiple write keys (one for prod env, another optional one for dev)
+-   disable page view tracking (just in case you want to add it later manually)
+-   up to date (Segment snippet 4.1.0)
+
+## Install
+
+-   `$ yarn add gatsby-plugin-segment-js`
+-   or `$ npm install --save gatsby-plugin-segment-js`
 
 ## How to use
 
 In your gatsby-config.js file:
+
 ```javascript
 plugins: [
     {
@@ -35,7 +40,7 @@ plugins: [
             trackPage: true
         }
     }
-]
+];
 ```
 
-If you want to track events, you simply invoke Segment as normal -- `analytics.track(<whatever>)` -- and you should see the events within your Segment debugger!  If you want to track pageviews, it should work automatically if `trackPage` is `true`.
+If you want to track events, you simply invoke Segment as normal -- `analytics.track(<whatever>)` -- and you should see the events within your Segment debugger! If you want to track pageviews, it should work automatically if `trackPage` is `true`.
