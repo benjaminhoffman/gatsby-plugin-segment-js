@@ -1,7 +1,7 @@
 {
     "name": "gatsby-plugin-segment-js",
     "description": "Easily add Segment JS snippet to your website",
-    "version": "2.0.2",
+    "version": "2.1.0",
     "main": "gatsby-ssr.js",
     "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment.git",
     "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
