@@ -8,8 +8,8 @@ module.exports = {
         {
             resolve: `gatsby-plugin-segment-js`,
             options: {
-                prodKey: `4Wyean61FvJHn3NAa73HUu9q55igUtLF`,
-                devKey: `4Wyean61FvJHn3NAa73HUu9q55igUtLF`,
+                prodKey: `ADD_API_KEY_PROD`,
+                devKey: `ADD_API_KEY_DEV`,
                 trackPage: true
             }
         },
