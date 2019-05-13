@@ -35,6 +35,11 @@ plugins: [
             // when process.env.NODE_ENV === 'development'
             // optional; non-empty string
             devKey: `SEGMENT_DEV_WRITE_KEY`,
+            // boolean (defaults to false) on whether you want
+            // to load all analytics automatically
+            // if true, window.analytics.load(writeKey) will need to be called in app
+            // used for halting cookies from analytics until a web visitor accepts cookies
+            loadOnRender: true,
 
             // boolean (defaults to false) on whether you want
             // to include analytics.page() automatically
