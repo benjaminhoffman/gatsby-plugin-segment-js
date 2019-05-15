@@ -12,8 +12,8 @@ Packed with features:
 
 ## Install
 
--   NPM: `$ yarn add gatsby-plugin-segment-js`
--   YARN: `$ npm install --save gatsby-plugin-segment-js`
+-   NPM: `$ npm install --save gatsby-plugin-segment-js`
+-   YARN: `$ yarn add gatsby-plugin-segment-js`
 
 ## How to use
 
