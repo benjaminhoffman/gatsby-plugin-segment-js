@@ -1,7 +1,7 @@
 import React from "react";
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-    const { trackPage, prodKey, devKey } = pluginOptions;
+    const { trackPage, prodKey, devKey, delayLoad } = pluginOptions;
 
     // ensures Segment write key is present
     if (!prodKey || prodKey.length < 10)
@@ -24,12 +24,22 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }}();
   `;
 
+    const delayedLoader = `window.addEventListener('scroll',() =>
+      setTimeout(() => {
+        ${snippet}
+      }, 1000),
+    { once: true }
+    );`
+
+    // if delayLoad option is true, use the delayed loader
+    const snippetToUse = delayLoad ? delayedLoader : snippet;
+
     // only render snippet if write key exists
     if (writeKey) {
         setHeadComponents([
             <script
                 key="plugin-segment"
-                dangerouslySetInnerHTML={{ __html: snippet }}
+                dangerouslySetInnerHTML={{ __html: snippetToUse }}
             />
         ]);
     }
