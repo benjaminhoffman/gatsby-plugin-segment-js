@@ -24,12 +24,23 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }}();
   `;
 
-    const delayedLoader = `window.addEventListener('scroll',() =>
-      setTimeout(() => {
-        ${snippet}
-      }, 1000),
-    { once: true }
-    );`
+    const delayedLoader = `
+      window.segmentSnippetLoaded = false;
+      window.segmentSnippetLoading = false;
+
+      window.segmentSnippetLoader = (callback) => {
+        if (!window.segmentSnippetLoaded && !window.segmentSnippetLoading) {
+          window.segmentSnippetLoading = true;
+          setTimeout(() => {
+            ${snippet}
+            window.segmentSnippetLoading = false;
+            window.segmentSnippetLoaded = true;
+            if(callback) {callback()}
+          }, 1000);
+        }
+      }
+      window.addEventListener('scroll',() => {window.segmentSnippetLoader()}, { once: true });
+    `
 
     // if delayLoad option is true, use the delayed loader
     const snippetToUse = delayLoad ? delayedLoader : snippet;
