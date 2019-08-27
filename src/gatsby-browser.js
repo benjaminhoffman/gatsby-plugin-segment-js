@@ -5,11 +5,7 @@ exports.onRouteUpdate = ({ prevLocation }, { trackPage }) => {
     }
   }
 
-  if (
-    prevLocation &&
-    window.segmentSnippetLoaded === false &&
-    wiindow.segmentSnippetLoading === false
-  ) {
+  if (prevLocation && window.segmentSnippetLoaded === false) {
     window.segmentSnippetLoader(() => {
       trackSegmentPage();
     });
