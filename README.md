@@ -42,7 +42,7 @@ plugins: [
             trackPage: false
 
             // boolean (defaults to false) on whether to load segment
-            // after a user action (scroll) + 1s delay
+            // after a user action (scroll or route change) + 1s delay
             // this will bring down your TTI but you might miss 1 second of data.
             delayLoad: false
         }
