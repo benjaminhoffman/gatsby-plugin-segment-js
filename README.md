@@ -39,13 +39,16 @@ plugins: [
             // boolean (defaults to false) on whether you want
             // to include analytics.page() automatically
             // if false, see below on how to track pageviews manually
-            trackPage: false
+            trackPage: false,
 
             // boolean (defaults to false) on whether to load segment
-            // after a user action (scroll or route change) + 1s delay
+            // after a user action (scroll or route change) + delay
             // this will bring down your TTI but you might miss 1 second of data.
             // see here for more info on TTI: https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md#performance
-            delayLoad: false
+            delayLoad: false,
+
+            // time to wait after scroll action in ms. Defaults to 1000ms
+            delayLoadTime: 1000
         }
     }
 ];
