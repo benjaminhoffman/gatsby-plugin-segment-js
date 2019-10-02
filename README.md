@@ -35,6 +35,10 @@ plugins: [
             // when process.env.NODE_ENV === 'development'
             // optional; non-empty string
             devKey: `SEGMENT_DEV_WRITE_KEY`,
+            
+            // if you need to proxy events through a custom endpoint,
+            // add a `host` property (defaults to https://cdn.segment.io)
+            host: `https://override-segment-endpoint`,
 
             // boolean (defaults to false) on whether you want
             // to include analytics.page() automatically
