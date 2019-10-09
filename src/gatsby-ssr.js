@@ -16,6 +16,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     const writeKey = process.env.NODE_ENV === "production" ? prodKey : devKey;
 
     // if trackPage option is falsy (undefined or false), remove analytics.page(), else keep it in by default
+    // NOTE: do not remove per https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/18
     const includeTrackPage = !trackPage ? "" : "analytics.page();";
 
     // Segment's minified snippet (version 4.1.0)
