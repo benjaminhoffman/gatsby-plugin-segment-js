@@ -38,6 +38,9 @@ plugins: [
             
             // if you need to proxy events through a custom endpoint,
             // add a `host` property (defaults to https://cdn.segment.io)
+            // Segment docs:
+            //   - https://segment.com/docs/guides/sources/custom-domains
+            //   - https://segment.com/docs/sources/website/analytics.js/#proxy
             host: `https://override-segment-endpoint`,
 
             // boolean (defaults to false) on whether you want
