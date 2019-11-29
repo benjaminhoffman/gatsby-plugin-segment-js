@@ -41,14 +41,16 @@ plugins: [
       // if false, see below on how to track pageviews manually
       trackPage: false,
 
-      // boolean (defaults to false); whether to delay load segment
-      // ADVANCED FEATURE: this setting should only be used if you are using client-side
-      // routing. It adds a slight delay to loading Segment to help improve your
-      // website's TTI (for SEO, UX, etc). But if you are using server-side routing and
-      // enable this feature, Segment will never load.  This occurs because the
-      // `delayLoad` functionality causes Segment to load immediately upon route change
-      // or user scroll (whichever comes first). Client-side routing doesn't do a full
-      // page refresh, thereby allowing this type of functionality to work.
+      // boolean (defaults to false); whether to delay load Segment
+      // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)
+      // This feature will force Segment to load _after_ either a page routing change
+      // or user scroll, whichever comes first. This delay time is controlled by
+      // `delayLoadTime` setting. This feature is used to help improve your website's
+      // TTI (for SEO, UX, etc).  See links below for more info.
+      // NOTE: But if you are using server-side routing and enable this feature,
+      // Segment will never load (because although client-side routing does not do
+      // a full page refresh, server-side routing does, thereby preventing Segment
+      // from ever loading).
       // See here for more context:
       // GIF: https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19#issuecomment-559569483
       // TTI: https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md#performance
