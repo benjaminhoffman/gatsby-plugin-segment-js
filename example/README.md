@@ -4,7 +4,7 @@ To create this example, I used Gatsby's default starter. Then I only modified tw
 
 ```bash
 $ cd example/
-$ yarn install
+$ yarn
 $ yarn develop
 ```
 

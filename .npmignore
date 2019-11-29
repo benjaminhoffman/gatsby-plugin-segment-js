@@ -23,7 +23,13 @@ coverage
 build/Release
 
 # Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+README.md
+.babelrc
+.gitignore
+.npmignore
+CHANGELOG.md
+example
+LICENSE
 node_modules
 *.un~
 yarn.lock
@@ -31,4 +37,3 @@ src
 flow-typed
 coverage
 decls
-examples

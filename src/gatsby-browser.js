@@ -5,8 +5,9 @@ exports.onRouteUpdate = ({ prevLocation }, { trackPage }) => {
     }
   }
 
-  // If this is a second page loaded via Gatsby routing, and the delayed loader has 
-  // not been loaded yet, we want to load it and then track the page.
+  // This `if/then` logic relates to the `delayLoad` functionality to help prevent
+  // calling `trackPage` twice. If you don't use that feature, you can ignore. Here
+  // call `trackPage` only _after_ we change routes (on the client).
   if (prevLocation && window.segmentSnippetLoaded === false) {
     window.segmentSnippetLoader(() => {
       trackSegmentPage();
