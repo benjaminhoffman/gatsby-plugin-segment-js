@@ -6,7 +6,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     prodKey,
     devKey,
     delayLoad,
-    delayLoadTime
+    delayLoadTime,
+    delayLoadCallback,
   } = pluginOptions;
 
   // ensures Segment write key is present
@@ -55,7 +56,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
           );
         }
       }
-      window.addEventListener('scroll',function () {window.segmentSnippetLoader()}, { once: true });
+      window.addEventListener('scroll',function () {window.segmentSnippetLoader(${delayLoadCallback})}, { once: true });
     `;
 
   // if `delayLoad` option is true, use the delayed loader
