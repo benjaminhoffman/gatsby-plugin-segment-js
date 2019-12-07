@@ -57,7 +57,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
           );
         }
       }
-      window.addEventListener('scroll',function () {window.segmentSnippetLoader(${delayLoadCallback})}, { once: true });
+      window.addEventListener('scroll',function () {window.segmentSnippetLoader()}, { once: true });
     `;
 
   // if `delayLoad` option is true, use the delayed loader
