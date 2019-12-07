@@ -7,7 +7,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     devKey,
     delayLoad,
     delayLoadTime,
-    delayLoadCallback,
+    onReady
   } = pluginOptions;
 
   // ensures Segment write key is present
@@ -35,8 +35,6 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       window.segmentSnippetLoaded = false;
       window.segmentSnippetLoading = false;
 
-      console.log('delay loader');
-
       window.segmentSnippetLoader = function (callback) {
         if (!window.segmentSnippetLoaded && !window.segmentSnippetLoading) {
           window.segmentSnippetLoading = true;
@@ -45,6 +43,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
             window.analytics.load('${writeKey}');
             window.segmentSnippetLoading = false;
             window.segmentSnippetLoaded = true;
+            window.analytics.ready(() => {
+              ${onReady}
+            })
             if(callback) {callback()}
           };
 
