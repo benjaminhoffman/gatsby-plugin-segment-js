@@ -35,6 +35,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       window.segmentSnippetLoaded = false;
       window.segmentSnippetLoading = false;
 
+      console.log('delay loader');
+
       window.segmentSnippetLoader = function (callback) {
         if (!window.segmentSnippetLoaded && !window.segmentSnippetLoading) {
           window.segmentSnippetLoading = true;
