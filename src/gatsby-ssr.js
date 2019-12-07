@@ -43,9 +43,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
             window.analytics.load('${writeKey}');
             window.segmentSnippetLoading = false;
             window.segmentSnippetLoaded = true;
-            window.analytics.ready(() => {
-              ${onReady}
-            })
+            window.analytics.ready(${onReady})
             if(callback) {callback()}
           };
 
