@@ -40,6 +40,13 @@ plugins: [
       // to include analytics.page() automatically
       // if false, see below on how to track pageviews manually
       trackPage: false,
+      
+      // If you need to proxy events through a custom endpoint,
+      // add a `host` property (defaults to https://cdn.segment.io)
+      // Segment docs:
+      //   - https://segment.com/docs/guides/sources/custom-domains
+      //   - https://segment.com/docs/sources/website/analytics.js/#proxy
+      host: `https://override-segment-endpoint`,
 
       // boolean (defaults to false); whether to delay load Segment
       // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)

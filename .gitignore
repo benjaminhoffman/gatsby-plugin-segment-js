@@ -8,3 +8,4 @@ yarn.lock
 !src/*.js
 
 yarn-error.log
+.idea
