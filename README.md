@@ -1,6 +1,6 @@
 # gatsby-plugin-segment-js
 
-A lightweight & feature-rich Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/sources/website/analytics.js/quickstart/) to your site.
+A lightweight & feature-rich Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/) to your site.
 
 ## Features
 
