@@ -5,9 +5,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     trackPage,
     prodKey,
     devKey,
-    host = 'https://cdn.segment.io',
+    host = "https://cdn.segment.io",
     delayLoad,
-    delayLoadTime
+    delayLoadTime,
   } = pluginOptions;
 
   // ensures Segment write key is present
@@ -71,7 +71,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       <script
         key="plugin-segment"
         dangerouslySetInnerHTML={{ __html: snippetToUse }}
-      />
+      />,
     ]);
   }
 };
