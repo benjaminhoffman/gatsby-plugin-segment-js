@@ -24,10 +24,10 @@ build/Release
 
 # Dependency directory
 README.md
+CHANGELOG.md
 .babelrc
 .gitignore
 .npmignore
-CHANGELOG.md
 example
 LICENSE
 node_modules
