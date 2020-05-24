@@ -6,7 +6,6 @@ exports.onRouteUpdate = function (_ref, _ref2) {
 
   function trackSegmentPage() {
     window.setTimeout(function () {
-      console.log(document.title);
       if (trackPage) {
         window.analytics && window.analytics.page();
       }

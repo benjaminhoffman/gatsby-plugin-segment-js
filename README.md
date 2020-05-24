@@ -44,8 +44,8 @@ plugins: [
       // If you need to proxy events through a custom endpoint,
       // add a `host` property (defaults to https://cdn.segment.io)
       // Segment docs:
-      //   - https://segment.com/docs/guides/sources/custom-domains
-      //   - https://segment.com/docs/sources/website/analytics.js/#proxy
+      //   - https://segment.com/docs/connections/sources/custom-domains
+      //   - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#proxy
       host: `https://override-segment-endpoint`,
 
       // boolean (defaults to false); whether to delay load Segment
