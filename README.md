@@ -49,6 +49,10 @@ plugins: [
       // if false, see below on how to track pageviews manually
       trackPage: false,
 
+      // number (defaults to 50); time to wait after a route update before it should
+      // track the page change
+      trackPageDelay: 300,
+
       // If you need to proxy events through a custom endpoint,
       // add a `host` property (defaults to https://cdn.segment.io)
       // Segment docs:
