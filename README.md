@@ -2,6 +2,14 @@
 
 A lightweight & feature-rich Gatsby plugin to easily add [Segment JS snippet](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/) to your site.
 
+## We need your help! 🙏🏽
+We're looking for active contributors to this repo!  If you're interested, simply open an issue or PR of your own and indicate that you'd like to help.  Check out our open issues and PRs.  We also need to beef up testing.  Contributors get to:
+- manage versioning and deploys by publishing new versions to NPM
+- determine which features get launched by merging pull requests
+- oversee the community through commenting on and managing pull requests and issues
+
+⚜️ Being an active contributor is great for the community and your engineering resume.⚜️
+
 ## Features
 
 Packed with features:
