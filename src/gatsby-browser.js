@@ -5,7 +5,7 @@ exports.onRouteUpdate = ({ prevLocation }, { trackPage }) => {
     // page tracking reports the previous page on route change).
     window.setTimeout(() => {
       if (trackPage) {
-        window.analytics && window.analytics.page();
+        window.analytics && window.analytics.page(document.title);
       }
     }, 50);
   }
