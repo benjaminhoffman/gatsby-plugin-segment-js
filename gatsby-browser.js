@@ -7,7 +7,7 @@ exports.onRouteUpdate = function (_ref, _ref2) {
   function trackSegmentPage() {
     window.setTimeout(function () {
       if (trackPage) {
-        window.analytics && window.analytics.page();
+        window.analytics && window.analytics.page(document.title);
       }
     }, 50);
   }
