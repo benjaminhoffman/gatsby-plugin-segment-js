@@ -1,3 +1,27 @@
+## 3.4.0
+
+- Adds `manualLoad` plugin option to allow users to manually load Segment snippet, e.g. waiting for a user to opt into being tracked for GDPR
+
+## 3.3.1
+
+- Send `document.title` with page tracking events for enhanced event data
+
+## 3.3.0
+
+- Adds a 50ms delay to page tracking calls to prevent erroneously sending duplicate page events
+
+## 3.2.1
+
+- Delete package-lock.json
+
+## 3.2.0
+
+- Bug: Built files not uploaded to npm
+
+## 3.1.1
+
+- Updated README.md
+
 ## 3.1.0
 
 - NEW FEATURE: we've added one new feature with two options: `delayLoad` and its friend `delayLoadTime`. When the former is set to true, we will delay loading Segment `delayLoadTime` seconds _after_ either a route change or user page scroll, whichever comes first. This functionality was built to help with SEO, UX, etc by preventing Segment from increasing your TTI.
