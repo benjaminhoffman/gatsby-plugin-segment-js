@@ -51,7 +51,7 @@ plugins: [
 
       // number (defaults to 50); time to wait after a route update before it should
       // track the page change, to implement this, make sure your `trackPage` property is set to `true`
-      trackPageDelay: 300,
+      trackPageDelay: 50,
 
       // If you need to proxy events through a custom endpoint,
       // add a `host` property (defaults to https://cdn.segment.io)
