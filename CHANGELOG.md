@@ -1,3 +1,7 @@
+## 3.5.0
+
+- Added `addSourceMiddleware`, `addIntegrationMiddleware`, `setAnonymousId`, and `addDestinationMiddleware` methods to Segment snippet
+
 ## 3.4.0
 
 - Adds `manualLoad` plugin option to allow users to manually load Segment snippet, e.g. waiting for a user to opt into being tracked for GDPR
