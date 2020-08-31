@@ -1,13 +1,16 @@
-exports.onRouteUpdate = ({ prevLocation }, { trackPage }) => {
+exports.onRouteUpdate = ({ prevLocation }, { trackPage, trackPageDelay = 50 }) => {
   function trackSegmentPage() {
-    // Adding a 50ms delay ensure that the segment route tracking is in sync with
-    // the actual Gatsby route (otherwise you can end up in a state where the Segment
-    // page tracking reports the previous page on route change).
+    // Adding a delay (defaults to 50ms when not provided by plugin option `trackPageDelay`)
+    // ensure that the segment route tracking is in sync with the actual Gatsby route
+    // (otherwise you can end up in a state where the Segment page tracking reports
+    // the previous page on route change).
+    const delay = Math.max(0, trackPageDelay)
+
     window.setTimeout(() => {
       if (trackPage) {
         window.analytics && window.analytics.page(document.title);
       }
-    }, 50);
+    }, delay);
   }
 
   // This `if/then` logic relates to the `delayLoad` functionality to help prevent
