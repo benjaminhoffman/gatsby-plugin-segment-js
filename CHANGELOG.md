@@ -1,3 +1,7 @@
+## 3.6.0
+
+- Added `trackPageDelay` option that allows specifying the amount of time to wait before calling `trackPage`. Thanks to @sreucherand!
+
 ## 3.5.0
 
 - Added `addSourceMiddleware`, `addIntegrationMiddleware`, `setAnonymousId`, and `addDestinationMiddleware` methods to Segment snippet
