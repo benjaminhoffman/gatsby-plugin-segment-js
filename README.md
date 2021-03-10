@@ -80,8 +80,8 @@ plugins: [
       // To be used when `delayLoad` is set to `true`
       delayLoadTime: 1000
 
-      // Whether to completely skip calling `analytics.load()`.
-      // ADVANCED FEATURE: only use if you are calling `analytics.load()` manually
+      // Whether to completely skip calling `analytics.load({writeKey})`.
+      // ADVANCED FEATURE: only use if you are calling `analytics.load({writeKey})` manually
       // elsewhere in your code or are using a library
       // like: https://github.com/segmentio/consent-manager that will call it for you.
       // Useful for only loading the tracking script once a user has opted in to being tracked, for example.
