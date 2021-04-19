@@ -1,3 +1,6 @@
+## 3.6.1
+
+- Added correct peer dependencies(thanks @LekoArts) and updated readme to show correct usage of analytics.load(thanks @seankovacs)
 ## 3.6.0
 
 - Added `trackPageDelay` option that allows specifying the amount of time to wait before calling `trackPage`. Thanks to @sreucherand!
