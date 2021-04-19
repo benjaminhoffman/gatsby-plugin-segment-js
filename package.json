@@ -3,7 +3,7 @@
   "description": "Easily add Segment JS snippet to your website",
   "version": "3.6.0",
   "main": "gatsby-ssr.js",
-  "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment.git",
+  "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment-js.git",
   "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
   "license": "MIT",
   "keywords": [
@@ -26,5 +26,8 @@
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.0.0 || ^2.0.0"
   }
 }
