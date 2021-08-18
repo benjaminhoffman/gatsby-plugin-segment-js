@@ -37,12 +37,12 @@ plugins: [
       // your segment write key for your production environment
       // when process.env.NODE_ENV === 'production'
       // required; non-empty string
-      prodKey: `SEGMENT_PRODUCTION_WRITE_KEY`,
+      prodKey: 'SEGMENT_PRODUCTION_WRITE_KEY',
 
       // if you have a development env for your segment account, paste that key here
       // when process.env.NODE_ENV === 'development'
       // optional; non-empty string
-      devKey: `SEGMENT_DEV_WRITE_KEY`,
+      devKey: 'SEGMENT_DEV_WRITE_KEY',
 
       // boolean (defaults to false) on whether you want
       // to include analytics.page() automatically
@@ -58,7 +58,7 @@ plugins: [
       // Segment docs:
       //   - https://segment.com/docs/connections/sources/custom-domains
       //   - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#proxy
-      host: `https://override-segment-endpoint`,
+      host: 'https://override-segment-endpoint',
 
       // boolean (defaults to false); whether to delay load Segment
       // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)
@@ -85,7 +85,22 @@ plugins: [
       // elsewhere in your code or are using a library
       // like: https://github.com/segmentio/consent-manager that will call it for you.
       // Useful for only loading the tracking script once a user has opted in to being tracked, for example.
-      manualLoad: false
+      manualLoad: false,
+
+      // This package will use a default version of Segment's code snippet, but
+      // if you'd like to include your own you can do so here. This is useful if
+      // the version this package uses is different than the one you'd like to
+      // use...or you need to do something custom.
+      // While you should use a back-ticked template string here, the string
+      // will be evaluated as template literal with the following variables
+      // available to it:
+      //    - `writeKey`: The appropriate value from the `prodKey` and `devKey`
+      //      options, based on the NODE_ENV`
+      //    - any of the other options passed here
+      // 
+      // NOTE: If your snippet already includes a call to `analytics.load()` 
+      // then be sure to disable auto-loading by setting `manualLoad` to `true`.
+      customSnippet: '!function(){var analytics=window.analytics||[];...;analytics._writeKey=${writeKey};'
     }
   }
 ];
