@@ -2,7 +2,9 @@
 *
 
 # Whitelist these
-!/dist/**
+!/index.js
+!/gatsby-browser.js
+!/gatsby-ssr.js
 !/README.md
 !/CHANGELOG.md
 !/LICENSE

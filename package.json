@@ -2,7 +2,7 @@
   "name": "gatsby-plugin-segment-js",
   "description": "Easily add Segment JS snippet to your website",
   "version": "3.6.1",
-  "main": "dist/gatsby-ssr.js",
+  "main": "gatsby-ssr.js",
   "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment-js.git",
   "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
   "license": "MIT",
@@ -15,9 +15,9 @@
     "gatsby-plugin"
   ],
   "scripts": {
-    "build": "babel src --out-dir dist --ignore __tests__",
+    "build": "babel src --out-dir . --ignore __tests__",
     "prepare": "yarn build",
-    "watch": "babel -w src --out-dir dist --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   },
   "bugs": {
     "url": "https://github.com/benjaminhoffman/gatsby-plugin-segment-js/issues"

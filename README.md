@@ -91,16 +91,22 @@ plugins: [
       // if you'd like to include your own you can do so here. This is useful if
       // the version this package uses is different than the one you'd like to
       // use...or you need to do something custom.
-      // While you should use a back-ticked template string here, the string
+      // While you should NOT use a back-ticked template string here, the string
       // will be evaluated as template literal with the following variables
       // available to it:
       //    - `writeKey`: The appropriate value from the `prodKey` and `devKey`
-      //      options, based on the NODE_ENV`
+      //      options, based on the `NODE_ENV`
       //    - any of the other options passed here
       // 
-      // NOTE: If your snippet already includes a call to `analytics.load()` 
-      // then be sure to disable auto-loading by setting `manualLoad` to `true`.
-      customSnippet: '!function(){var analytics=window.analytics||[];...;analytics._writeKey=${writeKey};'
+      // NOTES: 
+      // - If you provide a custom snippet, an immediate call to
+      //   `analytics.load()` and/or `analytics.page()` will not be added by
+      //   this plugin. You can - of course - add them yourself to your snippet.
+      // - If your custom snippet does not include a call to `analytics.load()`
+      //   then you must either:
+      //   1. Manually load it and set the `manualLoad` option here to `true`
+      //   2. Use the `delayLoad` option here
+      customSnippet: '!function(){var analytics=window.analytics||[];...;analytics.load("${writeKey}");analytics.page();}}();'
     }
   }
 ];
