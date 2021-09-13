@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const {
@@ -9,6 +9,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     delayLoad,
     delayLoadTime,
     manualLoad,
+    customSnippet,
   } = pluginOptions;
 
   // ensures Segment write key is present
@@ -23,14 +24,24 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // note below, snippet wont render unless writeKey is truthy
   const writeKey = process.env.NODE_ENV === "production" ? prodKey : devKey;
 
-  // if trackPage option is falsy (undefined or false), remove analytics.page(), else keep it in by default
-  // NOTE: do not remove per https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/18
-  const includeTrackPage = !trackPage ? "" : "analytics.page();";
+  let snippet
+  if (customSnippet) {
+    snippet = eval('`' + customSnippet + '`')
+  } else {
+    // Segment's snippet (version 4.13.2)
+    // If this is updated, probably good to update the README to include the version
+    snippet = `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="${host}/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="${writeKey}";analytics.SNIPPET_VERSION="4.13.2";`
 
-  // Segment's minified snippet (version 4.1.0)
-  const snippet = `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="${host}/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
-  ${delayLoad || manualLoad ? `` : `analytics.load('${writeKey}');` }
-  }}();`;
+    // Should it be loaded right away?
+    if (!(delayLoad || manualLoad)) {
+      snippet += `\nanalytics.load('${writeKey}');`
+      // Track the page right away, too?
+      if (trackPage) {
+        snippet += 'analytics.page();'
+      }
+    }
+    snippet += '\n}}();'
+  }
 
   const delayedLoader = `
       window.segmentSnippetLoaded = false;
@@ -41,7 +52,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
           window.segmentSnippetLoading = true;
 
           function loader() {
-            window.analytics.load('${writeKey}');
+            window.analytics.load('${writeKey}');${ trackPage ? 'window.analytics.page();' : ''}
             window.segmentSnippetLoading = false;
             window.segmentSnippetLoaded = true;
             if(callback) {callback()}

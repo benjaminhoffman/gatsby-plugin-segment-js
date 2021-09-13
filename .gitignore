@@ -1,3 +1,6 @@
+gatsby-browser.js
+gatsby-ssr.js
+
 node_modules
 
 yarn.lock

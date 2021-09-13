@@ -1,4 +1,8 @@
 exports.onRouteUpdate = ({ prevLocation }, { trackPage, trackPageDelay = 50 }) => {
+  if (!trackPage) {
+    return
+  }
+
   function trackSegmentPage() {
     // Adding a delay (defaults to 50ms when not provided by plugin option `trackPageDelay`)
     // ensure that the segment route tracking is in sync with the actual Gatsby route
@@ -7,9 +11,7 @@ exports.onRouteUpdate = ({ prevLocation }, { trackPage, trackPageDelay = 50 }) =
     const delay = Math.max(0, trackPageDelay)
 
     window.setTimeout(() => {
-      if (trackPage) {
-        window.analytics && window.analytics.page(document.title);
-      }
+      window.analytics && window.analytics.page(document.title);
     }, delay);
   }
 
