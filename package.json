@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-segment-js",
   "description": "Easily add Segment JS snippet to your website",
-  "version": "3.7.0",
+  "version": "3.7.1",
   "main": "gatsby-ssr.js",
   "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment-js.git",
   "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
@@ -31,6 +31,6 @@
     "eslint-plugin-react": "^7.24.0"
   },
   "peerDependencies": {
-    "gatsby": "^3.0.0 || ^2.0.0"
+    "gatsby": "^2 || ^3 || ^4"
   }
 }
