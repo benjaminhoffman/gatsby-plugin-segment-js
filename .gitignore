@@ -6,6 +6,8 @@ node_modules
 yarn.lock
 package-lock.json
 
+*.tgz
+
 *.DS_Store
 !src/*.js
 
