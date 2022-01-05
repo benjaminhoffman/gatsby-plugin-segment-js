@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-plugin-segment-js-test-gatsby-2",
+  "private": true,
+  "description": "A simple Gatsby app to test the plugin with Gatsby 2",
+  "version": "0.1.0",
+  "license": "0BSD",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "clean": "gatsby clean",
+    "plugin": "yarn plugin:build && yarn plugin:install",
+    "plugin:build": "yarn --cwd ../.. build-n-pack",
+    "plugin:remove": "yarn remove gatsby-plugin-segment-js",
+    "plugin:install": "yarn add ../../gatsby-plugin-segment-js.tgz",
+    "test": "yarn test:prepare && yarn test:run",
+    "test:prepare": "yarn plugin && yarn clean && yarn build",
+    "test:run": "mocha --config ./test/mocha-config.js"
+  },
+  "dependencies": {
+    "gatsby": "^2",
+    "gatsby-plugin-segment-js": "../../gatsby-plugin-segment-js.tgz",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}

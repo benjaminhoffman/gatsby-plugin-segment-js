@@ -1,0 +1,37 @@
+name: CI Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gatsby-version: [2, 3, 4]
+        node-version: [12.x, 14.x, 16.x]
+        exclude:
+          # excludes gatsby 4 on node 12.x
+          - node-version: 12.x
+            gatsby-version: 4
+
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # TODO: Figure out a way to cache the node_modules using `actions/setup-node` while also
+      # installing the *latest* version of each major version of Gatsby
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Run the yarn install on the parent directory so that build deps are present
+      - run: yarn install
+
+      # Run yarn test in the specific gatsby version directory
+      - run: yarn test
+        working-directory: ./tests/gatsby-${{ matrix.gatsby-version }}

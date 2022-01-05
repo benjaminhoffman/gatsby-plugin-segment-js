@@ -1,3 +1,7 @@
+## 3.7.1
+
+- Updated `gatsby` peer dependency to support `^2 || ^3 || ^4` https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/43
+
 ## 3.7.0
 
 - Updated default snippet to `4.13.2`

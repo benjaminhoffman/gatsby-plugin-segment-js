@@ -1,13 +1,24 @@
+# possible output files from local builds
 gatsby-browser.js
+gatsby-node.js
 gatsby-ssr.js
+
+# gatsby files
+.cache/
+public
 
 node_modules
 
+# Them lockfiles
 yarn.lock
 package-lock.json
 
+# Output of 'npm pack'
+*.tgz
+
 *.DS_Store
-!src/*.js
 
 yarn-error.log
-.idea
+
+# Finally, whitelist all .js files in the src/ directory
+!src/*.js
