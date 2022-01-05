@@ -1,12 +1,6 @@
 ## 3.7.1
 
 - Updated `gatsby` peer dependency to support `^2 || ^3 || ^4` https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/43
-- Added `customSnippet` option to allow for providing arbitrary snippet code
-- Decreased NPM package size
-- Some small optimizations
-- Added linting for developers
-
-- Added correct peer dependencies(thanks @LekoArts) and updated readme to show correct usage of analytics.load(thanks @seankovacs)
 
 ## 3.7.0
 
