@@ -8,12 +8,12 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "clean": "gatsby clean",
+    "plugin": "yarn plugin:build && yarn plugin:install",
+    "plugin:build": "yarn --cwd ../.. build-n-pack",
     "plugin:remove": "yarn remove gatsby-plugin-segment-js",
-    "plugin:build": "yarn pack --cwd ../.. --filename ../../gatsby-plugin-segment-js.tgz",
     "plugin:install": "yarn add ../../gatsby-plugin-segment-js.tgz",
-    "plugin": "yarn plugin:remove && yarn plugin:build && yarn plugin:install",
-    "test": "yarn && yarn test:prepare && yarn test:run",
-    "test:prepare": "yarn clean && yarn plugin && yarn build",
+    "test": "yarn test:prepare && yarn test:run",
+    "test:prepare": "yarn plugin && yarn clean && yarn build",
     "test:run": "mocha --config ./test/mocha-config.js"
   },
   "dependencies": {
