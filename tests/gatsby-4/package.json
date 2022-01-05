@@ -12,7 +12,7 @@
     "plugin:build": "yarn pack --cwd ../.. --filename ../../gatsby-plugin-segment-js.tgz",
     "plugin:install": "yarn add ../../gatsby-plugin-segment-js.tgz",
     "plugin": "yarn plugin:remove && yarn plugin:build && yarn plugin:install",
-    "test": "yarn test:prepare && yarn test:run",
+    "test": "yarn && yarn test:prepare && yarn test:run",
     "test:prepare": "yarn clean && yarn plugin && yarn build",
     "test:run": "mocha --config ./test/mocha-config.js"
   },
