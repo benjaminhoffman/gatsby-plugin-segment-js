@@ -16,7 +16,7 @@ Packed with features:
 
 - use multiple write keys (one for prod env, another optional one for dev)
 - disable page view tracking (just in case you want to add it later manually)
-- will use a default Segment code snippet (currently `v4.13.2`), or you can provide your own custom snippet
+- will use a default Segment code snippet (currently `v4.15.3`), or you can provide your own custom snippet
 
 ## Install
 
