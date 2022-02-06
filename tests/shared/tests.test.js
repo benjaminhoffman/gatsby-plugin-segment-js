@@ -43,6 +43,7 @@ describe('Code is there', function () {
 
   it('has segment code in app-*.js.map', function () {
     const jsMapText = fs.readFileSync(appJsMapFilePath).toString()
+    console.log(jsMapText)
     expect(jsMapText).to.include(String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.analytics && window.analytics.page(document.title);\n    }, delay);\n  }\n\n  if (prevLocation && window.segmentSnippetLoaded === false) {\n    window.segmentSnippetLoader(function () {\n      trackSegmentPage();\n    });\n  } else {\n    trackSegmentPage();\n  }\n};`)
   })
 })
