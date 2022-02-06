@@ -22,7 +22,9 @@
     "gatsby-plugin segment"
   ],
   "scripts": {
-    "build": "babel src --out-dir . --ignore tests",
+    "build:browser": "babel --out-dir . --config-file ./babel-browser.config.js src/*-browser.js",
+    "build:ssr": "babel --out-dir . --config-file ./babel-ssr.config.js src/*-ssr.js",
+    "build": "yarn build:browser && yarn build:ssr",
     "prepare": "yarn build",
     "build-n-pack": "yarn build && yarn pack --filename ./gatsby-plugin-segment-js.tgz",
     "watch": "babel -w src --out-dir . --ignore tests"
@@ -31,9 +33,10 @@
     "gatsby": "^2 || ^3 || ^4"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "eslint": "^7.32.0",
     "eslint-plugin-mocha": "^9",
     "eslint-plugin-react": "^7.24.0"
