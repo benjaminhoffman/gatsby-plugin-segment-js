@@ -21,8 +21,8 @@ const appJsMapFilePath = path.resolve(pathToPublic, appJsMapFileName)
 // As Node versions and Gatsby versions etc change + the fact that there is not lock file, things may
 // change a little bit in insignificant ways...so let's remove the whitespace chars before doing
 // comparisons
-function removeWhitespace (str) {
-  return str.replace(/\s+/g, '')
+function removeInsignificantChars (str) {
+  return str.replace(/\s+/g, '').replace(/\\n/g, '')
 }
 
 describe('Code is there', function () {
@@ -51,6 +51,10 @@ describe('Code is there', function () {
   it('has segment code in app-*.js.map', function () {
     const appCode = String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.analytics && window.analytics.page(document.title);\n    }, delay);\n  }\n\n  if (prevLocation && window.segmentSnippetLoaded === false) {\n    window.segmentSnippetLoader(function () {\n      trackSegmentPage();\n    });\n  } else {\n    trackSegmentPage();\n  }\n};`
     const jsMapText = fs.readFileSync(appJsMapFilePath).toString()
-    expect(removeWhitespace(jsMapText)).to.include(removeWhitespace(appCode))
+    console.log(removeInsignificantChars(jsMapText))
+    console.log(removeInsignificantChars(appCode))
+    expect(removeInsignificantChars(jsMapText)).to.include(removeInsignificantChars(appCode))
   })
 })
+
+
