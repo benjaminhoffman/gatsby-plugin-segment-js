@@ -13,7 +13,7 @@
     "plugin:remove": "yarn remove gatsby-plugin-segment-js",
     "plugin:install": "yarn add ../../gatsby-plugin-segment-js.tgz",
     "test": "yarn test:prepare && yarn test:run",
-    "test:prepare": "yarn plugin && yarn clean && yarn build",
+    "test:prepare": "yarn plugin && yarn install && yarn clean && yarn build",
     "test:run": "mocha --config ./test/mocha-config.js"
   },
   "dependencies": {
