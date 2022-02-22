@@ -1,3 +1,4 @@
+// https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
 exports.onRouteUpdate = ({ prevLocation }, { trackPage, trackPageDelay = 50 }) => {
   if (!trackPage) {
     return

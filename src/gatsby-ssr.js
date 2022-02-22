@@ -1,3 +1,4 @@
+// https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/
 import React from "react";
 
 export function onRenderBody({ setHeadComponents }, pluginOptions) {
