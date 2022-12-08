@@ -15,9 +15,12 @@ jobs:
         gatsby-version: [2, 3, 4]
         node-version: [12.x, 14.x, 16.x, 18.x]
         exclude:
-          # excludes gatsby 4 on node 12.x
+          # excludes gatsby 4 on node 12.x because it's not compatible
           - node-version: 12.x
             gatsby-version: 4
+          # excludes gatsby 2 on node 18.x because it's not compatible
+          - node-version: 18.x
+            gatsby-version: 2
         include:
           # gatsby 5 can only run on node 18.x
           - node-version: 18.x
