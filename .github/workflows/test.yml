@@ -10,13 +10,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      #fail-fast: false
       matrix:
         gatsby-version: [2, 3, 4]
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12.x, 14.x, 16.x, 18.x]
         exclude:
-          # excludes gatsby 4 on node 12.x
+          # excludes gatsby 4 on node 12.x because it's not compatible
           - node-version: 12.x
             gatsby-version: 4
+          # excludes gatsby 2 on node 18.x because it's not compatible
+          - node-version: 18.x
+            gatsby-version: 2
+        include:
+          # gatsby 5 can only run on node 18.x
+          - node-version: 18.x
+            gatsby-version: 5
 
 
     steps:
@@ -25,7 +33,7 @@ jobs:
       # TODO: Figure out a way to cache the node_modules using `actions/setup-node` while also
       # installing the *latest* version of each major version of Gatsby
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
