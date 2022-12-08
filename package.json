@@ -28,7 +28,7 @@
     "watch": "babel -w src --out-dir . --ignore tests"
   },
   "peerDependencies": {
-    "gatsby": "^2 || ^3 || ^4"
+    "gatsby": "^2 || ^3 || ^4 || ^5"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
