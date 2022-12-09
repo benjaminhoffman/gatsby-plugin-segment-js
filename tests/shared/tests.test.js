@@ -39,7 +39,7 @@ describe('Code is there', function () {
 
   it('has segment code in app-*.js', function () {
     const jsText = fs.readFileSync(appJsFilePath).toString()
-    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader(s')
+    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader(')
   })
 
   it('has segment code in app-*.js.map', function () {
