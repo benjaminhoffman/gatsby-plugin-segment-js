@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-plugin-segment-js-test-gatsby-5",
+  "private": true,
+  "description": "A simple Gatsby app to test the plugin with Gatsby 5",
+  "version": "0.1.0",
+  "license": "0BSD",
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "nodemon --config ./nodemon.json -x 'gatsby develop'",
+    "developp": "gatsby develop",
+    "clean": "gatsby clean",
+    "plugin:build": "yarn --cwd .. build",
+    "plugin:build:watch": "yarn --cwd .. build:watch",
+    "test": "mocha --config ./test/mocha-config.js",
+    "test:prepare": "yarn plugin:build && yarn clean && yarn build",
+    "test:all": "yarn test:prepare && yarn test"
+  },
+  "devDependencies": {
+    "gatsby": "^5",
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.20",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}

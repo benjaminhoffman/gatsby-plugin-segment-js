@@ -30,16 +30,16 @@ describe('Code is there', function () {
     expect(indexText).to.include('analytics._writeKey="ADD_API_KEY_PROD";')
     expect(indexText).to.include("analytics.load('ADD_API_KEY_PROD');")
     expect(indexText).to.include('analytics.SNIPPET_VERSION="4.15.3"')
-    expect(indexText).to.include('analytics.page();')
+    expect(indexText).to.include('analytics.page(')
 
-    const indexOfLastThing = indexText.indexOf('analytics.page();')
+    const indexOfLastThing = indexText.indexOf('analytics.page(')
     expect(indexOfLastThing).to.be.gt(indexOfHeadOpen)
     expect(indexOfLastThing).to.be.lt(indexOfHeadClose)
   })
 
   it('has segment code in app-*.js', function () {
     const jsText = fs.readFileSync(appJsFilePath).toString()
-    expect(jsText).to.include('window.segmentSnippetLoaded?window.segmentSnippetLoader((function(){')
+    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader((function(){')
   })
 
   it('has segment code in app-*.js.map', function () {
@@ -49,7 +49,7 @@ describe('Code is there', function () {
     )
     .to.include(
       compactString(
-        String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.analytics && window.analytics.page(document.title);\n    }, delay);\n  }\n\n  if (prevLocation && window.segmentSnippetLoaded === false) {\n    window.segmentSnippetLoader(function () {\n      trackSegmentPage();\n    });\n  } else {\n    trackSegmentPage();\n  }\n};`
+        String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller();\n    }, delay);\n  }\n\n  if (prevLocation && window.gatsbyPluginSegmentSnippetLoader) {\n    window.gatsbyPluginSegmentSnippetLoader(function () {\n      trackSegmentPage();\n    });\n  } else {\n    trackSegmentPage();\n  }\n};`
       )
     )
   })

@@ -53,6 +53,10 @@ plugins: [
       // track the page change, to implement this, make sure your `trackPage` property is set to `true`
       trackPageDelay: 50,
 
+      // Whether or not to include the document.title in the analytics.page() call
+      // Default: true
+      includeTitleInPageCall: true,
+
       // If you need to proxy events through a custom endpoint,
       // add a `host` property (defaults to https://cdn.segment.io)
       // Segment docs:

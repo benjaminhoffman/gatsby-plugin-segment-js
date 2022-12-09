@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ext": "js,json",
+  "watch": [
+    "../gatsby-browser.js",
+    "../gatsby-ssr.js"
+  ]
+}

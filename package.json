@@ -23,9 +23,9 @@
   ],
   "scripts": {
     "build": "babel src --out-dir . --ignore tests",
+    "build:watch": "yarn build -w",
     "prepare": "yarn build",
-    "build-n-pack": "yarn build && yarn pack --filename ./gatsby-plugin-segment-js.tgz",
-    "watch": "babel -w src --out-dir . --ignore tests"
+    "build-n-pack": "yarn build && yarn pack --filename ./gatsby-plugin-segment-js.tgz"
   },
   "peerDependencies": {
     "gatsby": "^2 || ^3 || ^4 || ^5"
