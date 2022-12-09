@@ -28,13 +28,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
 
   const idempotentPageviewCode = `
     var segmentPageviewCalled = false;
-    window.gatsbyPluginSegmentPageviewCaller = function (num) {
-      console.log("trackPage" + num);
-      console.log({
-        num,
-        analytics: window.analytics,
-        segmentPageviewCalled,
-      })
+    window.gatsbyPluginSegmentPageviewCaller = function () {
       if (!window.analytics || segmentPageviewCalled === true) {
         return
       }
@@ -55,7 +49,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       snippet += `\nanalytics.load('${writeKey}');`
       // Track the page right away, too?
       if (trackPage) {
-        snippet += 'window.gatsbyPluginSegmentPageviewCaller(3);'
+        snippet += 'window.gatsbyPluginSegmentPageviewCaller();'
       }
     }
     snippet += '\n}})();'
@@ -73,7 +67,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       segmentSnippetLoading = true;
 
       function loader() {
-        window.analytics.load('${writeKey}');${ trackPage ? 'window.gatsbyPluginSegmentPageviewCaller(4);' : ''}
+        window.analytics.load('${writeKey}');${ trackPage ? 'window.gatsbyPluginSegmentPageviewCaller();' : ''}
         segmentSnippetLoading = false;
         segmentSnippetLoaded = true;
         if(callback) {callback()}

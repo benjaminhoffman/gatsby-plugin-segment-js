@@ -30,9 +30,9 @@ describe('Code is there', function () {
     expect(indexText).to.include('analytics._writeKey="ADD_API_KEY_PROD";')
     expect(indexText).to.include("analytics.load('ADD_API_KEY_PROD');")
     expect(indexText).to.include('analytics.SNIPPET_VERSION="4.15.3"')
-    expect(indexText).to.include('analytics.page(')
+    expect(indexText).to.include('analytics.page(document.title);')
 
-    const indexOfLastThing = indexText.indexOf('analytics.page(')
+    const indexOfLastThing = indexText.indexOf('analytics.page(document.title);')
     expect(indexOfLastThing).to.be.gt(indexOfHeadOpen)
     expect(indexOfLastThing).to.be.lt(indexOfHeadClose)
   })
