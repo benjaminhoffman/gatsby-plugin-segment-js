@@ -1,3 +1,8 @@
+## 4.0.0
+
+- Add `includeTitleInPageCall` option, and set it to `true` by default. Strictly speaking, this was a "breaking change", hence the new major version.
+- Fix bug where `analytics.page()` would be called twice.
+
 ## 3.7.2
 
 - Updated `gatsby` peer dependency to support `^2 || ^3 || ^4 || ^5` https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/52
