@@ -3,7 +3,7 @@
   "description": "Easily add Segment JS snippet to your website",
   "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
   "license": "MIT",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "main": "gatsby-ssr.js",
   "homepage": "https://github.com/benjaminhoffman/gatsby-plugin-segment-js#readme",
   "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment-js.git",
