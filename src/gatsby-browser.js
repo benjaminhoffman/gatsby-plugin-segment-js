@@ -12,17 +12,12 @@ exports.onRouteUpdate = ({ prevLocation }, { trackPage, trackPageDelay = 50 }) =
     const delay = Math.max(0, trackPageDelay)
 
     window.setTimeout(() => {
-      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller();
+      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller(!!prevLocation);
     }, delay);
   }
 
-  // This `if/then` logic relates to the `delayLoad` functionality to help prevent
-  // calling `trackPage` twice. If you don't use that feature, you can ignore.
-  // Here call `trackPage` only _after_ we change routes (on the client).
-  if (prevLocation && window.gatsbyPluginSegmentSnippetLoader) {
-    window.gatsbyPluginSegmentSnippetLoader(() => {
-      trackSegmentPage();
-    });
+  if (window.gatsbyPluginSegmentSnippetLoader) {
+    window.gatsbyPluginSegmentSnippetLoader(trackSegmentPage);
   } else {
     trackSegmentPage();
   }

@@ -39,7 +39,7 @@ describe('Code is there', function () {
 
   it('has segment code in app-*.js', function () {
     const jsText = fs.readFileSync(appJsFilePath).toString()
-    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader((function(){')
+    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader(')
   })
 
   it('has segment code in app-*.js.map', function () {
@@ -49,7 +49,7 @@ describe('Code is there', function () {
     )
     .to.include(
       compactString(
-        String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller();\n    }, delay);\n  }\n\n  if (prevLocation && window.gatsbyPluginSegmentSnippetLoader) {\n    window.gatsbyPluginSegmentSnippetLoader(function () {\n      trackSegmentPage();\n    });\n  } else {\n    trackSegmentPage();\n  }\n};`
+        String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller(!!prevLocation);\n    }, delay);\n  }\n\n  if (window.gatsbyPluginSegmentSnippetLoader) {\n    window.gatsbyPluginSegmentSnippetLoader(trackSegmentPage);\n  } else {\n    trackSegmentPage();\n  }\n};`
       )
     )
   })

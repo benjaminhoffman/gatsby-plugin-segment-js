@@ -27,12 +27,15 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   const writeKey = process.env.NODE_ENV === "production" ? prodKey : devKey;
 
   const idempotentPageviewCode = `
-    var segmentPageviewCalled = false;
-    window.gatsbyPluginSegmentPageviewCaller = function () {
-      if (!window.analytics || segmentPageviewCalled === true) {
+    let segmentPageviewCalledAlready = false;
+    window.gatsbyPluginSegmentPageviewCaller = function (force) {
+      if (!window.analytics) {
         return
       }
-      segmentPageviewCalled = true;
+      if (segmentPageviewCalledAlready === true && !force) {
+        return
+      }
+      segmentPageviewCalledAlready = true;
       window.analytics.page(${ includeTitleInPageCall ? 'document.title' : ''});
     };
   `;
@@ -56,34 +59,50 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   }
 
   const delayedLoader = `
-    var segmentSnippetLoaded = false;
-    var segmentSnippetLoading = false;
+    let segmentSnippetLoaded = false;
+    let segmentSnippetLoading = false;
+    let segmentSnippetCallbacks = [];
 
-    window.gatsbyPluginSegmentSnippetLoader = function (callback) {
-      if (segmentSnippetLoaded || segmentSnippetLoading) {
+    window.gatsbyPluginSegmentSnippetLoader = function (cb) {
+      if (segmentSnippetLoaded) {
+        cb();
+        return
+      }
+
+      if (segmentSnippetLoading) {
+        segmentSnippetCallbacks.push(cb);
         return
       }
 
       segmentSnippetLoading = true;
 
       function loader() {
-        window.analytics.load('${writeKey}');${ trackPage ? 'window.gatsbyPluginSegmentPageviewCaller();' : ''}
+        window.analytics.load('${writeKey}');
         segmentSnippetLoading = false;
         segmentSnippetLoaded = true;
-        if(callback) {callback()}
+        let cb;
+        while ((cb = segmentSnippetCallbacks.pop()) != null) {
+          cb();
+        }
+        ${
+          // Do this *after* the callbacks run, so that if one of them was
+          // going to do a page() call and FORCE it, it would not result in 2 page()
+          // calls
+          trackPage ? 'window.gatsbyPluginSegmentPageviewCaller();' : ''
+        }
       };
 
       setTimeout(
         function () {
           "requestIdleCallback" in window
-            ? requestIdleCallback(function () {loader()})
+            ? requestIdleCallback(loader)
             : loader();
         },
         ${delayLoadTime} || 1000
       );
       }
     }
-    window.addEventListener('scroll',function () {window.gatsbyPluginSegmentSnippetLoader()}, { once: true });
+    window.addEventListener("scroll",function () {window.gatsbyPluginSegmentSnippetLoader()}, { once: true });
   `;
 
   // if `delayLoad` option is true, use the delayed loader
@@ -104,5 +123,3 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     ]);
   }
 };
-
-
