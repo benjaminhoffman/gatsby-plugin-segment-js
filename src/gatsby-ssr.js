@@ -65,7 +65,9 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
 
     window.gatsbyPluginSegmentSnippetLoader = function (cb) {
       if (segmentSnippetLoaded) {
-        cb();
+        if (typeof cb === "function") {
+          cb();
+        }
         return
       }
 
@@ -82,7 +84,9 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         segmentSnippetLoaded = true;
         let cb;
         while ((cb = segmentSnippetCallbacks.pop()) != null) {
-          cb();
+          if (typeof cb === "function") {
+            cb();
+          }
         }
         ${
           // Do this *after* the callbacks run, so that if one of them was
