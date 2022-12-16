@@ -1,3 +1,9 @@
+## 4.0.2
+- Fix syntax error in delayed loader code. https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/56
+
+## 4.0.1
+- Better idempotency. https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/54
+
 ## 4.0.0
 
 - Add `includeTitleInPageCall` option, and set it to `true` by default. Strictly speaking, this was a "breaking change", hence the new major version.
