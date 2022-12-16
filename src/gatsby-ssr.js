@@ -65,7 +65,9 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
 
     window.gatsbyPluginSegmentSnippetLoader = function (cb) {
       if (segmentSnippetLoaded) {
-        cb();
+        if (typeof cb === "function") {
+          cb();
+        }
         return
       }
 
