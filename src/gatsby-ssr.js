@@ -26,7 +26,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   // note below, snippet wont render unless writeKey is truthy
   const writeKey = process.env.NODE_ENV === "production" ? prodKey : devKey;
 
-  const idempotentPageviewCode = `
+  const idempotentPageviewCode = `(function () {
     let segmentPageviewCalledAlready = false;
     window.gatsbyPluginSegmentPageviewCaller = function (force) {
       if (!window.analytics) {
@@ -38,7 +38,8 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       segmentPageviewCalledAlready = true;
       window.analytics.page(${ includeTitleInPageCall ? 'document.title' : ''});
     };
-  `;
+  })();
+`;
 
   let snippet
   if (customSnippet) {
@@ -55,10 +56,10 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         snippet += 'window.gatsbyPluginSegmentPageviewCaller();'
       }
     }
-    snippet += '\n}})();'
+    snippet += '}})();'
   }
 
-  const delayedLoader = `
+  const delayedLoader = `(function () {
     let segmentSnippetLoaded = false;
     let segmentSnippetLoading = false;
     let segmentSnippetCallbacks = [];
@@ -100,18 +101,18 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         },
         ${delayLoadTime} || 1000
       );
-      }
-    }
+    };
     window.addEventListener("scroll",function () {window.gatsbyPluginSegmentSnippetLoader()}, { once: true });
-  `;
+  })();
+`;
 
   // if `delayLoad` option is true, use the delayed loader
   const snippetToUse = `
-    (function () {
-      ${idempotentPageviewCode}
-      ${delayLoad && !manualLoad ? delayedLoader : ""}
-      ${snippet}
-    })();`;
+(function () {
+  ${idempotentPageviewCode}
+  ${delayLoad && !manualLoad ? delayedLoader : ""}
+  ${snippet}
+})();`;
 
   // only render snippet if write key exists
   if (writeKey) {
@@ -122,4 +123,4 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       />,
     ]);
   }
-};
+}
