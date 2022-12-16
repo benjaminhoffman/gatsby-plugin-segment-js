@@ -38,8 +38,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       segmentPageviewCalledAlready = true;
       window.analytics.page(${ includeTitleInPageCall ? 'document.title' : ''});
     };
-  })();
-`;
+  })();`;
 
   let snippet
   if (customSnippet) {
@@ -103,8 +102,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       );
     };
     window.addEventListener("scroll",function () {window.gatsbyPluginSegmentSnippetLoader()}, { once: true });
-  })();
-`;
+  })();`;
 
   // if `delayLoad` option is true, use the delayed loader
   const snippetToUse = `
