@@ -1,3 +1,6 @@
+## 4.0.3
+- Ensure that cb is a function before calling it. https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/57
+
 ## 4.0.2
 - Fix syntax error in delayed loader code. https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/56
 
