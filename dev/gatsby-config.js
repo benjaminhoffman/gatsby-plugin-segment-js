@@ -12,7 +12,8 @@ module.exports = {
       options: {
         prodKey: `ADD_API_KEY_PROD`,
         devKey: `ADD_API_KEY_DEV`,
-        trackPage: true
+        trackPage: true,
+        delayLoad: true,
       }
     },
   ],
