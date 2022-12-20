@@ -62,11 +62,11 @@ plugins: [
       // This plugin will still attempt to intelligently prevent duplicate page() calls.
       // 
       // Default: true
-      trackImmediately: true,
+      trackPageImmediately: true,
 
       // Boolean indicating whether to perform any page() calls during Client-side routing updates.
       // 
-      // You might want to disable `trackImmediately` if you *only* want page() calls to occur upon
+      // You might want to disable `trackPageImmediately` if you *only* want page() calls to occur upon
       // Client-side routing updates.
       // 
       // This plugin will still attempt to intelligently prevent duplicate page() calls.

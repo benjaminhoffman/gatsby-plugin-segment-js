@@ -9,34 +9,54 @@ exports.onRouteUpdate = ({ prevLocation }, {
 }) => {
 
   // If this is meant to be responsible for calling "load", then let's do it
-  if (delayLoadUntilActivity && prevLocation) {
-    setTimeout(
-      function () {
-        if (window.gatsbyPluginSegmentLoader) {
-          window.gatsbyPluginSegmentLoader();
-        }
-      },
-      Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
-    )
-  }
-
-  // Anything else to do?
-  if (!(trackPage && trackPageOnRouteUpdate)) {
+  // and maybe also track the page
+  if (delayLoadUntilActivity) {
+    if (!prevLocation) {
+      return
+    }
+    const delay = Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
+    if (delay) {
+      setTimeout(loaderCallback, delay)
+    } else {
+      loaderCallback()
+    }
     return
   }
 
-  setTimeout(
-    function () {
-      if (window.gatsbyPluginSegmentPageviewCaller) {
-        window.gatsbyPluginSegmentPageviewCaller();
-      } else if (window.analytics) {
-        window.analytics.page(includeTitleInTrackPage ? document.title : undefined);
-      }
-    },
+  // Just maybe track the page
+  trackPageFn()
+  return
+
+  function pageviewCallback () {
+    if (window.gatsbyPluginSegmentPageviewCaller) {
+      window.gatsbyPluginSegmentPageviewCaller();
+    } else if (window.analytics) {
+      window.analytics.page(includeTitleInTrackPage ? document.title : undefined);
+    }
+  }
+
+  function trackPageFn () {
+    // Do we actually want to track the page?
+    if (!(trackPage && trackPageOnRouteUpdate)) {
+      return
+    }
+
     // Adding a delay (defaults to 50ms when not provided by plugin option `trackPageDelay`)
     // helps to ensure that the segment route tracking is in sync with the actual Gatsby route.
     // Otherwise you can end up in a state where the Segment page tracking reports
     // the previous page on route change.
-    Math.max(0, trackPageOnRouteUpdateDelay || 0)
-  );
+    const delay = Math.max(0, trackPageOnRouteUpdateDelay || 0)
+
+    if (delay) {
+      setTimeout(pageviewCallback, delay)
+    } else {
+      pageviewCallback()
+    }
+  }
+
+  function loaderCallback () {
+    if (window.gatsbyPluginSegmentLoader) {
+       window.gatsbyPluginSegmentLoader(trackPageFn);
+    }
+  }
 };
