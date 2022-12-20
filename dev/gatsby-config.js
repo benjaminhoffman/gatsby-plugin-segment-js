@@ -10,10 +10,16 @@ module.exports = {
     {
       resolve: require.resolve('..'),
       options: {
-        prodKey: `ADD_API_KEY_PROD`,
-        devKey: `ADD_API_KEY_DEV`,
+        prodKey: `Sy0LGznWXipqk72a6SJ8Dd1wqAonKqxR`,
+        devKey: `Sy0LGznWXipqk72a6SJ8Dd1wqAonKqxR`,
         trackPage: true,
+        trackPageOnRouteUpdateDelay: 5000,
+
         delayLoad: true,
+        delayLoadTime: 5000,
+
+        delayLodUntilActivity: true,
+        delayLoadUntilActivityAdditionalDelay: 1000,
       }
     },
   ],
