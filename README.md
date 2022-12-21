@@ -172,6 +172,10 @@ plugins: [
 ];
 ```
 
+### Loading
+
+A typical Segment setup using this plugin will add an initial "snippet" for Segment to the page. Once that snippet is there, it needs to be "loaded" completely by making a call to `analytics.load(<your segment key here>)` before it will actually send over any events to Segment. This `load` call causes a flurry of XHR calls, and some people seem to be quite concerned with having those calls not occur until after some delay - usually for SEO scores.
+
 ### Track Events
 
 If you want to track events, you simply invoke Segment as normal in your React components — (`window.analytics.track('Event Name', {...})` — and you should see the events within your Segment debugger! For example, if you wanted to track events on a click, it may look something like this:

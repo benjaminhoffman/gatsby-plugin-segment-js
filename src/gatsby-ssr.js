@@ -11,15 +11,17 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     trackPage = true,
     trackPageImmediately = true,
 
+    includeTitleInPageCall = true,
+
     delayLoad,
     delayLoadTime,
 
     delayLoadUntilActivity,
-    delayLoadUntilActivityAdditionalDelay,
+    delayLoadUntilActivityAdditionalDelay = 0,
 
     manualLoad,
     customSnippet,
-    includeTitleInPageCall = true,
+
   } = pluginOptions;
 
 
@@ -38,11 +40,29 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   const loadImmediately = !(delayLoad || delayLoadUntilActivity || manualLoad);
   const reallyTrackPageImmediately = trackPageImmediately && trackPage
 
+  console.log({
+    trackPage,
+    trackPageImmediately,
+
+    loadImmediately,
+    reallyTrackPageImmediately,
+
+    includeTitleInPageCall,
+
+    delayLoad,
+    delayLoadTime,
+
+    delayLoadUntilActivity,
+    delayLoadUntilActivityAdditionalDelay,
+
+    manualLoad,
+  })
+
   const idempotentPageviewCode = `(function () {
     let lastPageviewPath;
     window.gatsbyPluginSegmentPageviewCaller = function () {
       console.log({
-        analytics: window.analytics,
+        gatsbyPluginSegmentPageviewCaller: true,
         lastPageviewPath,
         thisPageviewPath: window.location.pathname,
       });
@@ -51,56 +71,65 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         return
       }
 
-      if (!window.analytics.loaded) {
-        return
-      }
-
       let thisPageviewPath = window.location.pathname;
       if (thisPageviewPath === lastPageviewPath) {
+        console.log("paths are the same. not duplciating page view");
         return
       }
+      console.log("making page call with " + thisPageviewPath);
       lastPageviewPath = thisPageviewPath;
       window.analytics.page(${ includeTitleInPageCall ? 'document.title' : ''});
     };
   })();`;
 
-  const delayedLoadingCode = `(function () {
+  let delayedLoadingCode = `(function () {
     let segmentLoaded = false;
     let segmentLoading = false;
     let callbacks = [];
+    function safeExecCallback (cb, i) {
+      if (typeof cb === "function") {
+        console.log("about to do callback " + i);
+        cb();
+      }
+    }
 
     window.gatsbyPluginSegmentLoader = function (cb) {
-      function safeExecCallback (cb) {
-        if (typeof cb === "function") {
-          cb();
-        }
-      }
-
       console.log({
         gatsbyPluginSegmentLoader: true,
         segmentLoaded,
         segmentLoading,
+        cb,
+        callbacks,
       })
 
       if (segmentLoaded) {
+        console.log("segment loaded already. doing callbacks");
         safeExecCallback(cb);
-        return
+        return;
       }
 
+      callbacks.push(cb);
       if (segmentLoading) {
-        callbacks.push(cb);
+        console.log("segment still loading. added to callbacks");
+        return;
       }
 
       segmentLoading = true;
 
       function loader() {
+        console.log("loader called");
+        if (typeof window.analytics.load !== "function") {
+          console.error("Gatsby Plugin Segment: analytics.load is not a function.");
+          return
+        }
         window.analytics.load('${writeKey}');
         segmentLoading = false;
         segmentLoaded = true;
         let cb;
-        while ((cb = segmentSnippetCallbacks.pop()) != null) {
-          safeExecCallback(cb);
-        }${trackPage ? `
+        let i = 0;
+        while ((cb = callbacks.pop()) != null) {
+          safeExecCallback(cb, ++i);
+        }${reallyTrackPageImmediately ? `
         window.gatsbyPluginSegmentPageviewCaller();` : ''}
       };
 
@@ -109,11 +138,35 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       } else {
         loader();
       }
-    };${ delayLoadUntilActivity ? `
-    window.addEventListener("scroll",function () {setTimeout(function () {window.gatsbyPluginSegmentLoader();}, Math.max(0, ${delayLoadUntilActivityAdditionalDelay || 0}}, { once: true });` :
-    delayLoad ? `
-    setTimeout(function () {window.gatsbyPluginSegmentLoader()}, ${delayLoadTime || 1000});` : ''
-  }
+    };`
+    if (delayLoadUntilActivity) {
+      delayedLoadingCode += `
+      console.log("adding scroll event listener");
+    window.addEventListener(
+      "scroll",
+      function () {
+        setTimeout(
+          function () {
+            console.log("scroll event listener activated!");
+            window.gatsbyPluginSegmentLoader && window.gatsbyPluginSegmentLoader();
+          },
+          ${Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)},
+        )
+      },
+      { once: true },
+    );`
+    } else if (delayLoad) {
+      delayedLoadingCode += `
+      console.log("adding timeout loader");
+    setTimeout(
+      function () {
+        console.log("timeout loader called!");
+        window.gatsbyPluginSegmentLoader && window.gatsbyPluginSegmentLoader();
+      },
+      ${delayLoadTime || 1000},
+    );`
+    }
+  delayedLoadingCode += `
   })();`;
 
   let snippet
@@ -125,10 +178,12 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     snippet = `(function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="${host}/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="${writeKey}";analytics.SNIPPET_VERSION="4.15.3";`
     if (loadImmediately) {
       snippet += `
+      console.log("loading immediately!");
     analytics.load('${writeKey}');`
       // Only track if it has been loaded
       if (reallyTrackPageImmediately) {
         snippet += `
+        console.log("calling page immediately");
     window.gatsbyPluginSegmentPageviewCaller();`
       }
     }

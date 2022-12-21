@@ -7,19 +7,49 @@ exports.onRouteUpdate = ({ prevLocation }, {
   delayLoadUntilActivityAdditionalDelay = 0,
   includeTitleInTrackPage,
 }) => {
+  console.log({
+    prevLocation,
+    trackPage,
+    trackPageOnRouteUpdate,
+    trackPageOnRouteUpdateDelay,
+    delayLoadUntilActivity,
+    delayLoadUntilActivityAdditionalDelay,
+    includeTitleInTrackPage,
+  })
 
   // If this is meant to be responsible for calling "load", then let's do it
-  // and maybe also track the page
-  if (delayLoadUntilActivity) {
-    if (!prevLocation) {
-      return
-    }
-    const delay = Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
-    if (delay) {
-      setTimeout(loaderCallback, delay)
+  // and maybe also track the page once loading is done.
+  if (delayLoadUntilActivity /*&& prevLocation*/) {
+    const additionalLoadDelay = Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
+
+    console.log({additionalLoadDelay})
+
+    if (additionalLoadDelay) {
+      const trackPageCb = () => {
+        console.log('track page cb');
+        // Just maybe track the page. Since we've already delayed, don't delay more.
+        return trackPageFn(additionalLoadDelay)
+      }
+
+      setTimeout(
+        function () {
+          console.log('delayed load timeout')
+          const callbackWasQueued = loaderCallback(trackPageCb)
+          console.log({callbackWasQueued})
+          if (!callbackWasQueued) {
+            trackPageCb()
+          }
+        },
+        additionalLoadDelay,
+      )
     } else {
-      loaderCallback()
+      const callbackWasQueued = loaderCallback(trackPageFn)
+      if (!callbackWasQueued) {
+        // Just maybe track the page
+        trackPageFn()
+      }
     }
+
     return
   }
 
@@ -35,7 +65,8 @@ exports.onRouteUpdate = ({ prevLocation }, {
     }
   }
 
-  function trackPageFn () {
+  // "page" if necessary. delaoyed if necessary
+  function trackPageFn (alreadyDelayedBy = 0) {
     // Do we actually want to track the page?
     if (!(trackPage && trackPageOnRouteUpdate)) {
       return
@@ -45,18 +76,24 @@ exports.onRouteUpdate = ({ prevLocation }, {
     // helps to ensure that the segment route tracking is in sync with the actual Gatsby route.
     // Otherwise you can end up in a state where the Segment page tracking reports
     // the previous page on route change.
-    const delay = Math.max(0, trackPageOnRouteUpdateDelay || 0)
-
-    if (delay) {
+    const delay = Math.max(0, trackPageOnRouteUpdateDelay || 0) - alreadyDelayedBy
+    console.log({
+      delay,
+      trackPageOnRouteUpdateDelay,
+      alreadyDelayedBy
+    })
+    if (delay > 0) {
       setTimeout(pageviewCallback, delay)
     } else {
       pageviewCallback()
     }
   }
 
-  function loaderCallback () {
+  // "load" then "page" if necessary
+  function loaderCallback (cb) {
     if (window.gatsbyPluginSegmentLoader) {
-       window.gatsbyPluginSegmentLoader(trackPageFn);
+      window.gatsbyPluginSegmentLoader(cb);
+      return true;
     }
   }
 };
