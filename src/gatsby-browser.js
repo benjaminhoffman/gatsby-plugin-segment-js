@@ -1,11 +1,26 @@
 // https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
 exports.onRouteUpdate = ({ prevLocation }, {
-  trackPage,
+  // For now this option is SSR only
+  // delayLoad = false,
+  // For now this option is SSR only
+  // delayLoadTime = 1000,
+
+  trackPage = true,
+
+  // For now this option is SSR only
+  // trackOnlyIfLoaded = false,
+  // For now this option is SSR only
+  // trackPageOnlyIfReady = false,
+
+  // For now, trackPageImmediately should ONLY be a thing that's used in the
+  // SSR code, while trackPageOnRouteUpdate is more for the Broser code
+  // trackPageImmediately = true,
+
   trackPageOnRouteUpdate = true,
   trackPageOnRouteUpdateDelay = 50,
   delayLoadUntilActivity = false,
   delayLoadUntilActivityAdditionalDelay = 0,
-  includeTitleInTrackPage,
+  includeTitleInTrackPage = false,
 }) => {
   console.log({
     prevLocation,
@@ -19,7 +34,7 @@ exports.onRouteUpdate = ({ prevLocation }, {
 
   // If this is meant to be responsible for calling "load", then let's do it
   // and maybe also track the page once loading is done.
-  if (delayLoadUntilActivity /*&& prevLocation*/) {
+  if (delayLoadUntilActivity && prevLocation) {
     const additionalLoadDelay = Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
 
     console.log({additionalLoadDelay})

@@ -10,8 +10,12 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
 
     trackPage = true,
     trackPageImmediately = true,
+    trackPageOnlyIfReady = false,
 
-    includeTitleInPageCall = true,
+    // This is ONLY for the Browser side code
+    // trackPageOnRouteUpdateDelay = true,
+
+    includeTitleInTrackPage = true,
 
     delayLoad,
     delayLoadTime,
@@ -44,10 +48,12 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     trackPage,
     trackPageImmediately,
 
+    trackPageOnlyIfReady,
+
     loadImmediately,
     reallyTrackPageImmediately,
 
-    includeTitleInPageCall,
+    includeTitleInTrackPage,
 
     delayLoad,
     delayLoadTime,
@@ -65,9 +71,19 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         gatsbyPluginSegmentPageviewCaller: true,
         lastPageviewPath,
         thisPageviewPath: window.location.pathname,
+        // trackOnlyIfReady,
       });
 
       if (!window.analytics) {
+        return
+      }${ trackPageOnlyIfReady ? `
+      if (!gatsbyPluginSegmentReady) {
+        console.log('gatsbyPluginSegmentReady seems falsey', gatsbyPluginSegmentReady);
+        return
+      }` : ''}
+
+      if (!gatsbyPluginSegmentReady) {
+        console.log('gatsbyPluginSegmentReady seems falsey', gatsbyPluginSegmentReady);
         return
       }
 
@@ -78,14 +94,14 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       }
       console.log("making page call with " + thisPageviewPath);
       lastPageviewPath = thisPageviewPath;
-      window.analytics.page(${ includeTitleInPageCall ? 'document.title' : ''});
+      window.analytics.page(${ includeTitleInTrackPage ? 'document.title' : ''});
     };
   })();`;
 
   let delayedLoadingCode = `(function () {
     let segmentLoaded = false;
     let segmentLoading = false;
-    let callbacks = [];
+    var callbacks = [];
     function safeExecCallback (cb, i) {
       if (typeof cb === "function") {
         console.log("about to do callback " + i);
@@ -122,7 +138,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
           console.error("Gatsby Plugin Segment: analytics.load is not a function.");
           return
         }
-        window.analytics.load('${writeKey}');
+        gatsbySegmentLoad('${writeKey}');
         segmentLoading = false;
         segmentLoaded = true;
         let cb;
@@ -172,6 +188,12 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   let snippet
   if (customSnippet) {
     snippet = eval('`' + customSnippet + '`')
+    snippet += `
+    window.analytics.ready(function () {
+      console.log("READY");
+      gatsbyPluginSegmentReady = true;
+    })
+    `
   } else {
     // Segment's snippet (version 4.15.3)
     // If this is updated, probably good to update the README to include the version
@@ -179,7 +201,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     if (loadImmediately) {
       snippet += `
       console.log("loading immediately!");
-    analytics.load('${writeKey}');`
+    gatsbySegmentLoad('${writeKey}');`
       // Only track if it has been loaded
       if (reallyTrackPageImmediately) {
         snippet += `
@@ -191,9 +213,19 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
   }})();`
   }
 
+  const gatsbySegmentLoadStuff = `let gatsbyPluginSegmentReady = ${ trackPageOnlyIfReady ? 'false' : 'true' };
+  function gatsbySegmentLoad (writeKey) {
+    if (window.analytics && window.analytics.load) {
+      window.analytics.load(writeKey);
+    }
+    gatsbyPluginSegmentReady = true;
+  };
+  `
+
   // if `delayLoad` option is true, use the delayed loader
   const pluginCode = `
 (function () {
+  ${gatsbySegmentLoadStuff}
   ${idempotentPageviewCode}
   ${(delayLoad || delayLoadUntilActivity) && !manualLoad ? delayedLoadingCode : ""}
   ${snippet}

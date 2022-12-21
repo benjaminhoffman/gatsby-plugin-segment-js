@@ -19,7 +19,8 @@ module.exports = {
         devKey: process.env.SEGMENT_KEY_DEV || 'SEGMENT_DEV_KEY',
 
         trackPage: true,
-        trackPageImmediately: false,
+        trackPageImmediately: true,
+        trackPageOnlyIfReady: true,
         trackPageOnRouteUpdateDelay: 5000,
 
         delayLoad: true,
