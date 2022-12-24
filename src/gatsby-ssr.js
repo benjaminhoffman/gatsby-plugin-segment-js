@@ -47,10 +47,6 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         return
       }` : ''}
 
-      if (!gatsbyPluginSegmentReady) {
-        return
-      }
-
       let thisPageviewPath = window.location.pathname;
       if (thisPageviewPath === lastPageviewPath) {
         return

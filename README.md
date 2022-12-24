@@ -53,7 +53,7 @@ plugins: [
       // Default: true
       trackPage: true,
 
-      // Bolean indicating if you want this plugin to peform a page() call immediately once the snippet
+      // Boolean indicating if you want this plugin to perform a page() call immediately once the snippet
       // is loaded.
       // 
       // You might want to disable this if you *only* want page() calls to occur upon Client-side routing
@@ -92,6 +92,8 @@ plugins: [
 
       // Boolean indicating whether or not to include the document.title in the analytics.page() calls
       // 
+      // E.g `analytics.page(document.title)`
+      // 
       // Default: false
       includeTitleInTrackPage: false,
       
@@ -111,20 +113,18 @@ plugins: [
       // Boolean indicating whether to delay calling analytics.load() until either:
       // 1) The User interacts with the page by scrolling
       // OR
-      // 2) The User triggers a Gatsby route change
+      // 2) The User triggers a Gatsby route change.
       // 
       // If set, the `delayLoad` functionality is ignored.
       // 
-      // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)
-      // This feature is used to help improve your website's TTI (for SEO, UX, etc).
+      // NOTE: 
+      // The route change will only be triggered if you leverage client-side routing (ie, Gatsby <Link>)
+      // So if you leverage server-side routing with this feature, only a User scroll will trigger
+      // the `load` call. This is because client-side routing does not do
+      // a full page refresh, but server-side routing does. Therfore server-side routing will never
+      // appear to have been triggered by a User interaction.
       // 
-      // See links below for more info.
-      // 
-      // NOTE: But if you are using server-side routing and enable this feature,
-      // Segment will never load. This is because although client-side routing does not do
-      // a full page refresh, server-side routing does, so the client-side code will
-      // be reloaded on each routing change rather than called again with the `prevLocation`
-      // set.
+      // This is an advanced feature most often used to try to help improve your website's TTI (for SEO, UX, etc).
       // 
       // See here for more context:
       // Client-side routing and browser code: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
