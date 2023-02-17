@@ -90,7 +90,9 @@ plugins: [
       // Default: 50
       trackPageOnRouteUpdateDelay: 50,
 
-      // Boolean indicating whether or not to include the document.title in the analytics.page() calls
+      // Boolean indicating whether or not to add the document.title as the first argument to
+      // the analytics.page() calls. Segment uses some san defaults, but some users of this plugin
+      // have wanted to do this in the past.
       // 
       // E.g `analytics.page(document.title)`
       // 

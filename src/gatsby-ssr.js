@@ -12,11 +12,11 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     // This is ONLY for the Browser side code
     // trackPageOnRouteUpdate = true,
     // trackPageOnRouteUpdateDelay = 50,
-    includeTitleInTrackPage = true,
-    manualLoad,
-    delayLoad,
-    delayLoadDelay,
-    delayLoadUntilActivity,
+    includeTitleInTrackPage = false,
+    manualLoad = false,
+    delayLoad = false,
+    delayLoadDelay = 1000,
+    delayLoadUntilActivity = false,
     delayLoadUntilActivityAdditionalDelay = 0,
     customSnippet,
   } = pluginOptions;
