@@ -114,7 +114,8 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       },
       { once: true },
     );`
-    } else if (delayLoad) {
+    }
+    if (delayLoad) {
       delayedLoadingCode += `
     setTimeout(
       function () {

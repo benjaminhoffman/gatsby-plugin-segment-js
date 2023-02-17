@@ -12,6 +12,7 @@ jobs:
     strategy:
       #fail-fast: false
       matrix:
+        # gatsby 5 can only run on node 18.x and will be added below via "include"
         gatsby-version: [2, 3, 4]
         node-version: [12.x, 14.x, 16.x, 18.x]
         exclude:

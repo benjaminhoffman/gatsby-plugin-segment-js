@@ -21,7 +21,7 @@ exports.onRouteUpdate = ({ prevLocation }, {
 
   // If this is meant to be responsible for calling "load", then let's do it
   // and maybe also track the page once loading is done.
-  if (delayLoadUntilActivity && prevLocation) {
+  if (prevLocation && delayLoadUntilActivity) {
     const additionalLoadDelay = Math.max(0, delayLoadUntilActivityAdditionalDelay || 0)
     if (additionalLoadDelay) {
       const trackPageCb = () => {

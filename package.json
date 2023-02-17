@@ -23,9 +23,11 @@
   ],
   "scripts": {
     "build": "babel src --out-dir . --ignore tests",
-    "build:watch": "yarn build -w",
-    "prepare": "yarn build",
-    "build-n-pack": "yarn build && yarn pack --filename ./gatsby-plugin-segment-js.tgz"
+    "build:watch": "npm run build -w",
+    "prepare": "npm run build",
+    "clear-scratch": "rm -f ./scratch/*.tgz",
+    "cp-scratch-tgz": "cp ./scratch/*.tgz ./gatsby-plugin-segment-js.tgz",
+    "build-n-pack": "npm run clear-scratch && npm run build && npm pack --pack-destination ./scratch && npm run cp-scratch-tgz"
   },
   "peerDependencies": {
     "gatsby": "^2 || ^3 || ^4 || ^5"

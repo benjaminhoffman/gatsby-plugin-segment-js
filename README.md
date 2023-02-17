@@ -115,7 +115,7 @@ plugins: [
       // OR
       // 2) The User triggers a Gatsby route change.
       // 
-      // If set, the `delayLoad` functionality is ignored.
+      // The `delayLoad` option can be used in addition to this option.
       // 
       // NOTE: 
       // The route change will only be triggered if you leverage client-side routing (ie, Gatsby <Link>)
