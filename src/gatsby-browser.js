@@ -3,7 +3,7 @@ exports.onRouteUpdate = ({ prevLocation }, {
   // For now this option is SSR only
   // delayLoad = false,
   // For now this option is SSR only
-  // delayLoadTime = 1000,
+  // delayLoadDelay = 1000,
   trackPage = true,
   // For now this option is SSR only
   // trackOnlyIfLoaded = false,

@@ -15,7 +15,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     includeTitleInTrackPage = true,
     manualLoad,
     delayLoad,
-    delayLoadTime,
+    delayLoadDelay,
     delayLoadUntilActivity,
     delayLoadUntilActivityAdditionalDelay = 0,
     customSnippet,
@@ -121,7 +121,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
       function () {
         window.gatsbyPluginSegmentLoader && window.gatsbyPluginSegmentLoader();
       },
-      ${delayLoadTime || 1000},
+      ${delayLoadDelay || 1000},
     );`
     }
   delayedLoadingCode += `

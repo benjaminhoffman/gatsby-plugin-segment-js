@@ -21,10 +21,11 @@ module.exports = {
         trackPage: true,
         trackPageImmediately: true,
         trackPageOnlyIfReady: true,
+        trackPageOnRouteUpdate: true,
         trackPageOnRouteUpdateDelay: 5000,
 
         delayLoad: true,
-        delayLoadTime: 5000,
+        delayLoadDelay: 5000,
 
         delayLoadUntilActivity: true,
         delayLoadUntilActivityAdditionalDelay: 1000,

@@ -108,7 +108,7 @@ plugins: [
       // the `delayLoad` option is set to `true`.
       // 
       // Default: 1000
-      delayLoadTime: 1000,
+      delayLoadDelay: 1000,
 
       // Boolean indicating whether to delay calling analytics.load() until either:
       // 1) The User interacts with the page by scrolling
@@ -181,7 +181,7 @@ plugins: [
 ### Loading
 
 A typical Segment setup using this plugin will add an initial "snippet" for Segment to the page. Once that snippet is there, it needs to be "loaded" completely by making a call to `analytics.load(<your segment key here>)` before it will actually send over any events to Segment. This `load` call causes a flurry of XHR calls, and some people seem to be quite concerned with having those calls not occur until after some delay - usually for SEO scores, though it's not clear to me if the way Segment handles `load` calls will impact TTI, etc. Regardless, if you want this plugin to delay calling `load`, you have 2 options:
-    1. `delayLoad`: This will cause a straightforward delay before `load` is called. Use in conjunction with `delayLoadTime` to tweak the amount of the delay.
+    1. `delayLoad`: This will cause a straightforward delay before `load` is called. Use in conjunction with `delayLoadDelay` to tweak the amount of the delay.
     2. `delayLoadUntilActivity`: This will wait to call `load` until __either__ (a) the user triggers a "scroll" event or (b) the user triggers route change. This option will take precendence over the `delayLoad` option.
 
 ### Track Events
