@@ -3,7 +3,7 @@
   "description": "Easily add Segment JS snippet to your website",
   "author": "benjamin hoffman <6520022+benjaminhoffman@users.noreply.github.com>",
   "license": "MIT",
-  "version": "5.0.0-beta.1",
+  "version": "5.0.0",
   "main": "gatsby-ssr.js",
   "homepage": "https://github.com/benjaminhoffman/gatsby-plugin-segment-js#readme",
   "repository": "git@github.com:benjaminhoffman/gatsby-plugin-segment-js.git",
@@ -23,11 +23,9 @@
   ],
   "scripts": {
     "build": "babel src --out-dir . --ignore tests",
-    "build:watch": "npm run build -w",
-    "prepare": "npm run build",
-    "clear-scratch": "rm -f ./scratch/*.tgz",
-    "cp-scratch-tgz": "cp ./scratch/*.tgz ./gatsby-plugin-segment-js.tgz",
-    "build-n-pack": "npm run clear-scratch && npm run build && npm pack --pack-destination ./scratch && npm run cp-scratch-tgz"
+    "build:watch": "yarn build -w",
+    "prepare": "yarn build",
+    "build-n-pack": "yarn build && yarn pack --filename ./gatsby-plugin-segment-js.tgz"
   },
   "peerDependencies": {
     "gatsby": "^2 || ^3 || ^4 || ^5"
