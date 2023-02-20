@@ -91,7 +91,7 @@ plugins: [
       trackPageOnRouteUpdateDelay: 50,
 
       // Boolean indicating whether or not to add the document.title as the first argument to
-      // the analytics.page() calls. Segment uses some san defaults, but some users of this plugin
+      // the analytics.page() calls. Segment uses some sane defaults, but some users of this plugin
       // have wanted to do this in the past.
       // 
       // E.g `analytics.page(document.title)`
@@ -133,6 +133,8 @@ plugins: [
       // GIF: https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19#issuecomment-559569483
       // TTI: https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md#performance
       // Problem/solution: https://marketingexamples.com/seo/performance
+      // 
+      // Default: false
       delayLoadUntilActivity: false,
 
       // Number indicating (in ms) any additional delay to wait before calling analytics.load()
@@ -146,6 +148,8 @@ plugins: [
       // elsewhere in your code or are using a library
       // like: https://github.com/segmentio/consent-manager that will call it for you.
       // Useful for only loading the tracking script once a user has opted in to being tracked, for example.
+      // 
+      // Default: false
       manualLoad: false,
 
       // If you need to proxy events through a custom endpoint,
@@ -153,6 +157,8 @@ plugins: [
       // Segment docs:
       //   - https://segment.com/docs/connections/sources/custom-domains
       //   - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#proxy
+      // 
+      // Default: 'https://cdn.segment.io'
       host: 'https://override-segment-endpoint',
 
       // This package will use a default version of Segment's code snippet, but
