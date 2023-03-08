@@ -97,7 +97,7 @@ plugins: [
       // E.g `analytics.page(document.title)`
       // 
       // Default: false
-      includeTitleInTrackPage: false,
+      trackPageWithTitle: false,
       
       // Boolean indicating whether to call analytics.load() immediately, or to delay it by a specified
       // number of ms. Can be useful if you want to wait a specifc amount of time before calling

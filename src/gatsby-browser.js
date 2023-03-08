@@ -16,8 +16,14 @@ exports.onRouteUpdate = ({ prevLocation }, {
   trackPageOnRouteUpdateDelay = 50,
   delayLoadUntilActivity = false,
   delayLoadUntilActivityAdditionalDelay = 0,
-  includeTitleInTrackPage = false,
+  includeTitleInTrackPage,
+  trackPageWithTitle = false,
 }) => {
+
+  if (typeof includeTitleInTrackPage === 'boolean') {
+    console.warn('WARNING: option for gatsby-plugin-segment "includeTitleInTrackPage" is deprecated. Please use "trackPageWithTitle" instead.')
+    trackPageWithTitle = includeTitleInTrackPage
+  }
 
   // If this is meant to be responsible for calling "load", then let's do it
   // and maybe also track the page once loading is done.
@@ -57,7 +63,7 @@ exports.onRouteUpdate = ({ prevLocation }, {
     if (window.gatsbyPluginSegmentPageviewCaller) {
       window.gatsbyPluginSegmentPageviewCaller();
     } else if (window.analytics) {
-      window.analytics.page(includeTitleInTrackPage ? document.title : undefined);
+      window.analytics.page(trackPageWithTitle ? document.title : undefined);
     }
   }
 

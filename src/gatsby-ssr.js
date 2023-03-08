@@ -12,7 +12,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     // This is ONLY for the Browser side code
     // trackPageOnRouteUpdate = true,
     // trackPageOnRouteUpdateDelay = 50,
-    includeTitleInTrackPage = false,
+    includeTitleInTrackPage,
     manualLoad = false,
     delayLoad = false,
     delayLoadDelay = 1000,
@@ -21,6 +21,14 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
     customSnippet,
   } = pluginOptions;
 
+  let {
+    trackPageWithTitle = false,
+  } = pluginOptions;
+
+  if (typeof includeTitleInTrackPage === 'boolean') {
+    console.warn('WARNING: option for gatsby-plugin-segment "includeTitleInTrackPage" is deprecated. Please use "trackPageWithTitle" instead.')
+    trackPageWithTitle = includeTitleInTrackPage
+  }
 
   // ensures Segment write key is present
   if (!prodKey || prodKey.length < 10)
@@ -52,7 +60,7 @@ export function onRenderBody({ setHeadComponents }, pluginOptions) {
         return
       }
       lastPageviewPath = thisPageviewPath;
-      window.analytics.page(${ includeTitleInTrackPage ? 'document.title' : ''});
+      window.analytics.page(${ trackPageWithTitle ? 'document.title' : ''});
     };
   })();`;
 
