@@ -2,6 +2,7 @@
   "verbose": true,
   "ext": "js,json",
   "watch": [
+    "./gatsby-config.js",
     "../gatsby-browser.js",
     "../gatsby-ssr.js"
   ]

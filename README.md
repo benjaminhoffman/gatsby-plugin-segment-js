@@ -44,52 +44,122 @@ plugins: [
       // optional; non-empty string
       devKey: 'SEGMENT_DEV_WRITE_KEY',
 
-      // boolean (defaults to false) on whether you want
-      // to include analytics.page() automatically
-      // if false, see below on how to track pageviews manually
-      trackPage: false,
-
-      // number (defaults to 50); time to wait after a route update before it should
-      // track the page change, to implement this, make sure your `trackPage` property is set to `true`
-      trackPageDelay: 50,
-
-      // Whether or not to include the document.title in the analytics.page() call
+      // Boolean indicating if you want this plugin to perform any automated analytics.page() calls
+      // at all, or not.
+      // If set to false, see below on how to track pageviews manually.
+      // 
+      // This plugin will attempt to intelligently prevent duplicate page() calls.
+      // 
       // Default: true
-      includeTitleInPageCall: true,
+      trackPage: true,
 
-      // If you need to proxy events through a custom endpoint,
-      // add a `host` property (defaults to https://cdn.segment.io)
-      // Segment docs:
-      //   - https://segment.com/docs/connections/sources/custom-domains
-      //   - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#proxy
-      host: 'https://override-segment-endpoint',
+      // Boolean indicating if you want this plugin to perform a page() call immediately once the snippet
+      // is loaded.
+      // 
+      // You might want to disable this if you *only* want page() calls to occur upon Client-side routing
+      // updates. See `trackPageOnRouteUpdate` option.
+      // 
+      // This plugin will still attempt to intelligently prevent duplicate page() calls.
+      // 
+      // Default: true
+      trackPageImmediately: true,
 
-      // boolean (defaults to false); whether to delay load Segment
-      // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)
-      // This feature will force Segment to load _after_ either a page routing change
-      // or user scroll, whichever comes first. This delay time is controlled by
-      // `delayLoadTime` setting. This feature is used to help improve your website's
-      // TTI (for SEO, UX, etc).  See links below for more info.
-      // NOTE: But if you are using server-side routing and enable this feature,
-      // Segment will never load (because although client-side routing does not do
-      // a full page refresh, server-side routing does, thereby preventing Segment
-      // from ever loading).
+      // Boolean indicating whether to ignore `page` calls by this plugin before we call `analytics.load`
+      // and/or the `ready` event has been emitted by `analytics`.
+      // 
+      // Useful in some cases to prevent issues "queuing" `page` events before Segment is fully loaded.
+      trackPageOnlyIfReady: false,
+
+      // Boolean indicating whether to perform any page() calls during Client-side routing updates.
+      // 
+      // You might want to disable `trackPageImmediately` if you *only* want page() calls to occur upon
+      // Client-side routing updates.
+      // 
+      // This plugin will still attempt to intelligently prevent duplicate page() calls.
+      // 
+      // Default: true
+      trackPageOnRouteUpdate: true,
+
+      // Number indicating what delay (in ms) should be used when calling analytics.page() in response
+      // to a Gatsby `onRouteUpdate` event. This can help to ensure that the segment route tracking is 
+      // in sync with the actual Gatsby route. Otherwise you can end up in a state where the Segment
+      // page tracking reports the previous page on route change.
+      // 
+      // See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/ for more information.
+      // 
+      // Default: 50
+      trackPageOnRouteUpdateDelay: 50,
+
+      // Boolean indicating whether or not to add the document.title as the first argument to
+      // the analytics.page() calls. Segment uses some sane defaults, but some users of this plugin
+      // have wanted to do this in the past.
+      // 
+      // E.g `analytics.page(document.title)`
+      // 
+      // Default: false
+      trackPageWithTitle: false,
+      
+      // Boolean indicating whether to call analytics.load() immediately, or to delay it by a specified
+      // number of ms. Can be useful if you want to wait a specifc amount of time before calling
+      // analytics.load() and kicking off the activity that occurs with that call.
+      // 
+      // Default: false
+      delayLoad: false,
+
+      // Number indicating (in ms) how long to wait for before analytics.load() will be called if
+      // the `delayLoad` option is set to `true`.
+      // 
+      // Default: 1000
+      delayLoadDelay: 1000,
+
+      // Boolean indicating whether to delay calling analytics.load() until either:
+      // 1) The User interacts with the page by scrolling
+      // OR
+      // 2) The User triggers a Gatsby route change.
+      // 
+      // The `delayLoad` option can be used in addition to this option.
+      // 
+      // NOTE: 
+      // The route change will only be triggered if you leverage client-side routing (ie, Gatsby <Link>)
+      // So if you leverage server-side routing with this feature, only a User scroll will trigger
+      // the `load` call. This is because client-side routing does not do
+      // a full page refresh, but server-side routing does. Therfore server-side routing will never
+      // appear to have been triggered by a User interaction.
+      // 
+      // This is an advanced feature most often used to try to help improve your website's TTI (for SEO, UX, etc).
+      // 
       // See here for more context:
+      // Client-side routing and browser code: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
       // GIF: https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19#issuecomment-559569483
       // TTI: https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md#performance
       // Problem/solution: https://marketingexamples.com/seo/performance
-      delayLoad: false,
+      // 
+      // Default: false
+      delayLoadUntilActivity: false,
 
-      // number (default to 1000); time to wait after scroll or route change
-      // To be used when `delayLoad` is set to `true`
-      delayLoadTime: 1000,
+      // Number indicating (in ms) any additional delay to wait before calling analytics.load()
+      // after User "activity" has occurred in conjunction with the `delayLoadUntilActivity` option.
+      // 
+      // Default: 0
+      delayLoadUntilActivityAdditionalDelay: 0,
 
       // Whether to completely skip calling `analytics.load({writeKey})`.
       // ADVANCED FEATURE: only use if you are calling `analytics.load({writeKey})` manually
       // elsewhere in your code or are using a library
       // like: https://github.com/segmentio/consent-manager that will call it for you.
       // Useful for only loading the tracking script once a user has opted in to being tracked, for example.
+      // 
+      // Default: false
       manualLoad: false,
+
+      // If you need to proxy events through a custom endpoint,
+      // add a `host` property (defaults to https://cdn.segment.io)
+      // Segment docs:
+      //   - https://segment.com/docs/connections/sources/custom-domains
+      //   - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#proxy
+      // 
+      // Default: 'https://cdn.segment.io'
+      host: 'https://override-segment-endpoint',
 
       // This package will use a default version of Segment's code snippet, but
       // if you'd like to include your own you can do so here. This is useful if
@@ -115,6 +185,12 @@ plugins: [
   }
 ];
 ```
+
+### Loading
+
+A typical Segment setup using this plugin will add an initial "snippet" for Segment to the page. Once that snippet is there, it needs to be "loaded" completely by making a call to `analytics.load(<your segment key here>)` before it will actually send over any events to Segment. This `load` call causes a flurry of XHR calls, and some people seem to be quite concerned with having those calls not occur until after some delay - usually for SEO scores, though it's not clear to me if the way Segment handles `load` calls will impact TTI, etc. Regardless, if you want this plugin to delay calling `load`, you have 2 options:
+    1. `delayLoad`: This will cause a straightforward delay before `load` is called. Use in conjunction with `delayLoadDelay` to tweak the amount of the delay.
+    2. `delayLoadUntilActivity`: This will wait to call `load` until __either__ (a) the user triggers a "scroll" event or (b) the user triggers route change. This option will take precendence over the `delayLoad` option.
 
 ### Track Events
 
@@ -145,7 +221,13 @@ class IndexPage extends React.Component {
 
 ### Track Pageviews
 
-If you want to track pageviews automatically, set `trackPage` to `true` in your `gatsby-config.js` file. What we mean by _"automatically"_ is that whenever there is a route change, we leverage Gatsby's `onRouteUpdate` API in the `gatsby-browser.js` file ([link](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate)) to invoke `window.analytics.page()` on each route change. But if you want to pass in properties along with the pageview call (ie, it's common to see folks pass in some user or account data with each page call), then you'll have to set `trackPage: false` and call it yourself in your `gatsby-browser.js` file, like this:
+If you want to track pageviews automatically, set (or leave) `trackPage` to `true` in your `gatsby-config.js` file. What we mean by _"automatically"_ is that we will intelligently decide how or when to invoke `window.analytics.page()` for you.
+
+This involves identifying if the last `page` call was made while the User was on the same `location.pathname` as the previous `page` call. If they appear to be the same, we will skip the duplicate call.
+
+This plugin can also leverage Gatsby's `onRouteUpdate` API in the `gatsby-browser.js` file ([link][on-route-update]) if you so desire. This is accomplished by setting (or leaving) the `trackPageOnRouteUpdate` to `true`. If this option is enabled, we will make a `page` call every time that the `onRouteUpdate` handler is called. That includes the initial route, and any route changes.
+
+If you only want to use this plugin to inject and load Segment, and not make any `page` calls, this can be done. Just set `trackPage: false`. But then you will have to make `page` calls yourself in your `gatsby-browser.js` file, like this:
 
 ```javascript
 // gatsby-browser.js
@@ -153,3 +235,5 @@ exports.onRouteUpdate = () => {
   window.analytics && window.analytics.page();
 };
 ```
+
+[on-route-update]: https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate

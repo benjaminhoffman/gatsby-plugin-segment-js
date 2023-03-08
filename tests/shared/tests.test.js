@@ -28,18 +28,18 @@ describe('Code is there', function () {
     expect(indexOfFirstThing).to.be.lt(indexOfHeadClose)
 
     expect(indexText).to.include('analytics._writeKey="ADD_API_KEY_PROD";')
-    expect(indexText).to.include("analytics.load('ADD_API_KEY_PROD');")
+    expect(indexText).to.include("gatsbySegmentLoad('ADD_API_KEY_PROD');")
     expect(indexText).to.include('analytics.SNIPPET_VERSION="4.15.3"')
-    expect(indexText).to.include('analytics.page(document.title);')
+    expect(indexText).to.include('analytics.page();')
 
-    const indexOfLastThing = indexText.indexOf('analytics.page(document.title);')
+    const indexOfLastThing = indexText.indexOf('analytics.page();')
     expect(indexOfLastThing).to.be.gt(indexOfHeadOpen)
     expect(indexOfLastThing).to.be.lt(indexOfHeadClose)
   })
 
   it('has segment code in app-*.js', function () {
     const jsText = fs.readFileSync(appJsFilePath).toString()
-    expect(jsText).to.include('window.gatsbyPluginSegmentSnippetLoader?window.gatsbyPluginSegmentSnippetLoader(')
+    expect(jsText).to.include('window.gatsbyPluginSegmentLoader(')
   })
 
   it('has segment code in app-*.js.map', function () {
@@ -49,7 +49,7 @@ describe('Code is there', function () {
     )
     .to.include(
       compactString(
-        String.raw`if (!trackPage) {\n    return;\n  }\n\n  function trackSegmentPage() {\n    var delay = Math.max(0, trackPageDelay);\n\n    window.setTimeout(function () {\n      window.gatsbyPluginSegmentPageviewCaller && window.gatsbyPluginSegmentPageviewCaller(!!prevLocation);\n    }, delay);\n  }\n\n  if (window.gatsbyPluginSegmentSnippetLoader) {\n    window.gatsbyPluginSegmentSnippetLoader(trackSegmentPage);\n  } else {\n    trackSegmentPage();\n  }\n};`
+        String.raw` function trackPageFn() {\n    var alreadyDelayedBy = `
       )
     )
   })

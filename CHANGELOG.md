@@ -1,3 +1,6 @@
+## 5.0.0
+- BREAKING CHANGE: The `options` now support more complex things, and some thing are renamed. Please check out all of the options in the `README`.
+
 ## 4.0.3
 - Ensure that cb is a function before calling it. https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/57
 
